@@ -1,0 +1,305 @@
+/* =========================================================
+   FitBite — Stylesheet
+   Color palette (edit these to re-theme the whole site):
+   - Cream background:  #F4F0E7
+   - Tint background:   #ECE3D1
+   - Dark green:        #0E2A1F / #143A2B
+   - Body text:         #52614F
+   - Heading text:      #15271D
+   - Accent gold/brown: #7A5237 / #B89A5C
+   ========================================================= */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #F4F0E7;
+  color: #15271D;
+}
+
+img { max-width: 100%; display: block; }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- Reusable text styles ---------- */
+
+.eyebrow {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #7A5237;
+  margin-bottom: 16px;
+}
+.eyebrow-light { color: #6FB58C; }
+
+h1, h2 {
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #15271D;
+  line-height: 1.1;
+}
+h1 { font-size: 56px; margin-bottom: 20px; }
+h2 { font-size: 40px; margin-bottom: 24px; }
+
+.text-cream { color: #F4F0E7 !important; }
+.text-cream-soft { color: rgba(233,223,203,0.8) !important; }
+
+.lead {
+  font-size: 19px;
+  line-height: 1.5;
+  color: #52614F;
+  margin-bottom: 24px;
+  max-width: 640px;
+}
+
+.section-intro {
+  font-size: 18px;
+  color: #52614F;
+  margin-bottom: 32px;
+  max-width: 640px;
+}
+
+.fine-print {
+  font-size: 14px;
+  color: #8A9384;
+  font-weight: 600;
+}
+.fine-print-dark { color: rgba(233,223,203,0.55); }
+
+/* ---------- Brand / logo ---------- */
+
+.brand { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.brand-name { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; color: #15271D; }
+
+.logo-dot {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: #143A2B;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.logo-dot span { width: 12px; height: 12px; border-radius: 50%; background: #E9DFCB; }
+.logo-dot-dark { background: #E9DFCB; }
+.logo-dot-dark span { background: #0E2A1F; }
+
+/* ---------- Hero ---------- */
+
+.hero { background: #F4F0E7; padding: 80px 0; }
+.hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+.hero-text { flex: 1 1 420px; }
+.hero-image { flex: 1 1 360px; max-width: 480px; }
+.hero-image img {
+  border-radius: 20px;
+  border: 1px solid rgba(20,58,43,0.1);
+  box-shadow: 0 30px 60px rgba(20,58,43,0.15);
+}
+
+/* ---------- Section backgrounds ---------- */
+
+.section { padding: 90px 0; }
+.section-light { background: #F4F0E7; }
+.section-tint  { background: #ECE3D1; }
+.section-dark  { background: #0E2A1F; }
+
+/* ---------- Stat cards (Problem section) ---------- */
+
+.stat-grid {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.stat-card {
+  flex: 1 1 220px;
+  background: #fff;
+  border: 1px solid rgba(20,58,43,0.12);
+  border-radius: 18px;
+  padding: 36px;
+}
+.stat-number {
+  font-size: 56px;
+  font-weight: 800;
+  color: #143A2B;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+.stat-unit { font-size: 28px; color: #7A5237; }
+.stat-label { font-size: 18px; color: #52614F; margin-top: 14px; }
+
+/* ---------- Card grids (Why It Fails / Who It's For) ---------- */
+
+.card-grid {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.card-grid-4 .white-card { flex: 1 1 220px; }
+
+.white-card {
+  flex: 1 1 250px;
+  background: #fff;
+  border: 1px solid rgba(20,58,43,0.1);
+  border-radius: 18px;
+  padding: 36px;
+}
+.card-num { font-size: 18px; font-weight: 800; color: #B89A5C; margin-bottom: 14px; }
+.card-title { font-size: 24px; font-weight: 700; color: #15271D; margin-bottom: 12px; }
+.card-text { font-size: 17px; line-height: 1.5; color: #52614F; }
+.card-arrow { font-size: 16px; font-weight: 700; color: #143A2B; margin-top: 14px; }
+
+/* ---------- Outcomes (dark stat strip) ---------- */
+
+.outcomes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(233,223,203,0.2);
+}
+.outcome-cell {
+  flex: 1 1 220px;
+  padding: 32px 24px;
+  border-right: 1px solid rgba(233,223,203,0.16);
+}
+.outcome-shift {
+  font-size: 22px;
+  color: rgba(233,223,203,0.5);
+  font-weight: 700;
+}
+.outcome-big {
+  font-size: 48px;
+  color: #F4F0E7;
+  letter-spacing: -1px;
+}
+.outcome-big.standalone { font-weight: 800; display: block; }
+.arrow { color: #6FB58C; }
+.outcome-label { font-size: 18px; color: #E9DFCB; margin-top: 14px; font-weight: 700; }
+.outcome-sub { font-size: 14px; color: rgba(233,223,203,0.55); margin-top: 4px; }
+
+/* ---------- Product cards (Ecosystem) ---------- */
+
+.product-card {
+  flex: 1 1 280px;
+  background: #fff;
+  border: 1px solid rgba(20,58,43,0.1);
+  border-radius: 18px;
+  overflow: hidden;
+}
+.product-card img { width: 100%; height: 220px; object-fit: cover; }
+.product-card-body { padding: 28px; }
+.tag {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.tag-red   { color: #B5503C; }
+.tag-green { color: #3E8E5E; }
+.tag-blue  { color: #5B7FA6; }
+.product-name { font-size: 24px; font-weight: 700; color: #15271D; margin-bottom: 10px; }
+.product-spec { font-size: 16px; color: #52614F; }
+
+/* ---------- Split layout (Truffle / Laddu / Powder detail) ---------- */
+
+.split {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  padding: 0;
+}
+.split-text {
+  flex: 1 1 420px;
+  padding: 70px 6vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.split-image {
+  flex: 1 1 380px;
+  min-height: 360px;
+}
+.split-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.split-image-contain img {
+  object-fit: contain;
+  padding: 30px;
+  height: 100%;
+}
+.split-reverse { flex-direction: row-reverse; }
+
+.mini-stat-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.mini-stat {
+  flex: 1 1 100px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+}
+.mini-stat-num { font-size: 32px; font-weight: 800; color: #143A2B; }
+.mini-stat-label { font-size: 15px; color: #7C8A7E; margin-top: 4px; }
+
+.timeline-row {
+  display: flex;
+  gap: 36px;
+  border-top: 2px solid rgba(20,58,43,0.1);
+  padding-top: 24px;
+  flex-wrap: wrap;
+}
+.timeline-day { font-size: 14px; font-weight: 700; letter-spacing: 1px; color: #B89A5C; }
+.timeline-event { font-size: 19px; font-weight: 700; color: #15271D; margin-top: 6px; }
+
+.pill-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.pill {
+  font-size: 15px;
+  font-weight: 700;
+  color: #143A2B;
+  background: #EDE6D4;
+  border-radius: 99px;
+  padding: 10px 18px;
+}
+
+/* ---------- Science section ---------- */
+
+.science-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.science-item {
+  flex: 1 1 180px;
+  border-top: 3px solid #6FB58C;
+  padding-top: 20px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #F4F0E7;
+}
+
+/* ---------- Closing ---------- */
+
+.closing { text-align: center; }
+.closing .container { display: flex; flex-direction: column; align-items: center; }
+.closing .brand { justify-content: center; }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px) {
+  h1 { font-size: 38px; }
+  h2 { font-size: 30px; }
+  .section { padding: 60px 0; }
+  .hero { padding: 60px 0; }
+  .split-text { padding: 50px 24px; }
+  .split-image, .split-image-contain { min-height: 280px; }
+}
