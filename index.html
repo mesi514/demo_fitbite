@@ -10,499 +10,400 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   *{ box-sizing:border-box; }
   body{ margin:0; }
-  ::selection{ background:#143A2B; color:#F4F0E7; }
-  @keyframes fbFloat { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-14px); } }
-  @keyframes fbZoom { from{ transform:scale(1.02); } to{ transform:scale(1.12); } }
-  @keyframes fbGloss { 0%{ transform:translateY(-70%); opacity:0; } 35%{ opacity:.8; } 70%{ opacity:.2; } 100%{ transform:translateY(170%); opacity:0; } }
-  @keyframes fbBob { 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-6px) rotate(-2deg); } }
-  @keyframes fbDrift { 0%,100%{ transform:translateY(0) rotate(-3deg); } 50%{ transform:translateY(-18px) rotate(3deg); } }
+  ::selection{ background:#FF3D8B; color:#fff; }
+  @keyframes fbFloat { 0%,100%{ transform:translateY(0) rotate(-3deg); } 50%{ transform:translateY(-16px) rotate(3deg); } }
   @keyframes fbSpin { from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
   @keyframes fbMarquee { from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
-  @keyframes fbShimmer { 0%{ transform:translateX(-120%); } 100%{ transform:translateX(120%); } }
-  @keyframes fbReveal { from{ opacity:0; transform:translateY(30px); } to{ opacity:1; transform:none; } }
-  @keyframes fbPopIn { from{ opacity:0; transform:scale(.93) translateY(22px); } to{ opacity:1; transform:none; } }
-  @keyframes fbBarFill { from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
-  /* Content is visible by default; these animations are pure enhancement (run once on mount). */
-  #top [data-reveal]{ animation:fbReveal .8s cubic-bezier(.2,.7,.2,1) both; }
-  #top [data-pop]{ animation:fbPopIn .9s cubic-bezier(.2,.7,.2,1) both; }
-  #top [data-bar]{ transform-origin:left center; animation:fbBarFill 1.1s cubic-bezier(.2,.7,.2,1) both; }
-  @media (prefers-reduced-motion: reduce){
-    #top [data-reveal], #top [data-pop], #top [data-bar]{ animation:none !important; }
-  }
-  @media (max-width:860px){
-    #top [data-rcol]{ grid-template-columns:1fr !important; }
-    #top [data-navlinks]{ display:none !important; }
-  }
-  @media (max-width:600px){
-    #top [data-rcol]{ gap:16px !important; }
-  }
+  @keyframes fbMarqueeR { from{ transform:translateX(-50%); } to{ transform:translateX(0); } }
+  @keyframes fbWobble { 0%,100%{ transform:rotate(-4deg); } 50%{ transform:rotate(4deg); } }
+  @keyframes fbBob { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-7px); } }
+  @keyframes fbZoom { from{ transform:scale(1.02); } to{ transform:scale(1.14); } }
+  @keyframes fbGloss { 0%{ transform:translateY(-70%); opacity:0; } 40%{ opacity:.85; } 100%{ transform:translateY(180%); opacity:0; } }
+  @keyframes fbReveal { from{ opacity:0; transform:translateY(34px); } to{ opacity:1; transform:none; } }
+  @keyframes fbPopIn { from{ opacity:0; transform:scale(.9) rotate(-2deg); } to{ opacity:1; transform:none; } }
+  @keyframes fbBar { from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+  @keyframes fbHue { 0%{ filter:hue-rotate(0deg); } 100%{ filter:hue-rotate(360deg); } }
+  #top [data-reveal]{ animation:fbReveal .7s cubic-bezier(.2,.8,.2,1) both; }
+  #top [data-pop]{ animation:fbPopIn .8s cubic-bezier(.2,.8,.2,1) both; }
+  #top [data-bar]{ transform-origin:left center; animation:fbBar 1.1s cubic-bezier(.2,.8,.2,1) both; }
+  #top a[data-chip]{ transition:transform .18s ease, box-shadow .18s ease; }
+  #top a[data-chip]:hover{ transform:translate(-2px,-2px); box-shadow:6px 6px 0 #1A1033; }
+  #top [data-card]{ transition:transform .2s ease, box-shadow .2s ease; }
+  #top [data-card]:hover{ transform:translate(-3px,-3px); }
+  @media (prefers-reduced-motion:reduce){ #top *{ animation-duration:.01ms !important; } }
+  @media (max-width:900px){ #top [data-rcol]{ grid-template-columns:1fr !important; } #top [data-navlinks]{ display:none !important; } #top [data-ghost]{ display:none !important; } }
 </style>
 <script src="image-slot.js"></script>
 </helmet>
-<div ref="{{ rootRef }}" id="top" style="background:#F4F0E7;color:#52614F;font-family:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative;">
+<div ref="{{ rootRef }}" id="top" style="background:#FFF3DD;color:#1A1033;font-family:'Hanken Grotesk',-apple-system,sans-serif;font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative;">
 
-  <header data-nav style="position:fixed;top:0;left:0;right:0;z-index:60;border-bottom:1px solid rgba(20,58,43,0);transition:background .45s ease, border-color .45s ease, backdrop-filter .45s ease;">
-    <div style="max-width:1200px;margin:0 auto;padding:15px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
-      <a href="#top" data-scroll style="display:flex;align-items:center;gap:11px;text-decoration:none;flex-shrink:0;">
-        <span style="width:34px;height:34px;border-radius:10px;background:#143A2B;display:flex;align-items:center;justify-content:center;">
-          <span style="width:11px;height:11px;border-radius:50%;background:#E9DFCB;"></span>
-        </span>
-        <span style="font-family:'Sora',sans-serif;font-weight:700;font-size:21px;letter-spacing:-0.02em;color:#15271D;">FitBite</span>
+  <header data-nav style="position:fixed;top:0;left:0;right:0;z-index:70;transition:padding .3s ease;">
+    <div style="max-width:1240px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px;">
+      <a href="#top" data-scroll style="display:flex;align-items:center;gap:10px;text-decoration:none;background:#1A1033;border:2.5px solid #1A1033;padding:8px 14px 8px 10px;border-radius:14px;box-shadow:4px 4px 0 #FF3D8B;flex-shrink:0;">
+        <span style="width:26px;height:26px;border-radius:50%;background:#FFD23F;display:flex;align-items:center;justify-content:center;font-size:15px;">🍫</span>
+        <span style="font-family:'Sora',sans-serif;font-weight:800;font-size:19px;letter-spacing:-0.02em;color:#fff;">FitBite</span>
       </a>
-      <nav data-navlinks style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.55);border:1px solid rgba(20,58,43,0.08);padding:5px;border-radius:999px;">
-        <a href="#truffle" data-scroll style="text-decoration:none;color:#3C4A3D;font-weight:600;font-size:14.5px;padding:8px 16px;border-radius:999px;transition:background .2s ease,color .2s ease;" style-hover="background:#143A2B;color:#F4F0E7;">Vitamin D Truffle</a>
-        <a href="#laddu" data-scroll style="text-decoration:none;color:#3C4A3D;font-weight:600;font-size:14.5px;padding:8px 16px;border-radius:999px;transition:background .2s ease,color .2s ease;" style-hover="background:#143A2B;color:#F4F0E7;">Fibre Laddu</a>
-        <a href="#powder" data-scroll style="text-decoration:none;color:#3C4A3D;font-weight:600;font-size:14.5px;padding:8px 16px;border-radius:999px;transition:background .2s ease,color .2s ease;" style-hover="background:#143A2B;color:#F4F0E7;">Vitality Powder</a>
+      <nav data-navlinks style="display:flex;align-items:center;gap:6px;background:#1A1033;border:2.5px solid #1A1033;padding:5px;border-radius:999px;box-shadow:4px 4px 0 #2D5BFF;">
+        <a href="#truffle" data-scroll style="text-decoration:none;color:#1A1033;background:#FF8A00;font-weight:800;font-size:14px;padding:8px 16px;border-radius:999px;">Truffle</a>
+        <a href="#laddu" data-scroll style="text-decoration:none;color:#1A1033;background:#14CFA6;font-weight:800;font-size:14px;padding:8px 16px;border-radius:999px;">Laddu</a>
+        <a href="#powder" data-scroll style="text-decoration:none;color:#1A1033;background:#7FB0FF;font-weight:800;font-size:14px;padding:8px 16px;border-radius:999px;">Powder</a>
       </nav>
-      <a href="#life" data-scroll style="background:#143A2B;color:#F4F0E7;padding:11px 20px;border-radius:999px;font-weight:600;font-size:14.5px;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:transform .25s ease, background .25s ease;" style-hover="background:#0E2A1F;transform:translateY(-2px);">Across life stages</a>
+      <a href="#life" data-scroll data-chip style="background:#C6FF3D;color:#1A1033;border:2.5px solid #1A1033;padding:11px 18px;border-radius:14px;font-weight:800;font-size:14px;text-decoration:none;white-space:nowrap;box-shadow:4px 4px 0 #1A1033;flex-shrink:0;">Life stages →</a>
     </div>
   </header>
 
-  <section style="position:relative;overflow:hidden;padding:168px 0 90px;">
-    <div style="position:absolute;top:-180px;left:50%;transform:translateX(-50%);width:900px;height:560px;background:radial-gradient(ellipse at center, rgba(20,58,43,0.07), rgba(244,240,231,0) 68%);pointer-events:none;"></div>
-    <div aria-hidden="true" style="position:absolute;top:190px;left:50%;transform:translateX(-50%);font-family:'Sora',sans-serif;font-weight:800;font-size:min(20vw,300px);line-height:1;letter-spacing:-0.05em;color:rgba(20,58,43,0.045);white-space:nowrap;pointer-events:none;user-select:none;">EAT WELL</div>
-    <div aria-hidden="true" style="position:absolute;top:130px;left:8%;width:180px;height:180px;border:2px dashed rgba(20,58,43,0.12);border-radius:50%;animation:fbSpin 40s linear infinite;pointer-events:none;"></div>
-    <div aria-hidden="true" style="position:absolute;bottom:120px;right:6%;width:120px;height:120px;border:2px dashed rgba(122,82,55,0.16);border-radius:50%;animation:fbSpin 30s linear infinite reverse;pointer-events:none;"></div>
-    <span aria-hidden="true" style="position:absolute;top:150px;left:14%;background:#fff;border:1px solid rgba(20,58,43,0.1);box-shadow:0 10px 30px rgba(20,58,43,0.1);padding:9px 16px;border-radius:999px;font-weight:700;font-size:14px;color:#B5503C;animation:fbDrift 7s ease-in-out infinite;pointer-events:none;">☀️ Vitamin D</span>
-    <span aria-hidden="true" style="position:absolute;top:250px;right:12%;background:#fff;border:1px solid rgba(20,58,43,0.1);box-shadow:0 10px 30px rgba(20,58,43,0.1);padding:9px 16px;border-radius:999px;font-weight:700;font-size:14px;color:#3E8E5E;animation:fbDrift 8s ease-in-out 1s infinite;pointer-events:none;">🌾 Fibre</span>
-    <span aria-hidden="true" style="position:absolute;top:360px;left:9%;background:#fff;border:1px solid rgba(20,58,43,0.1);box-shadow:0 10px 30px rgba(20,58,43,0.1);padding:9px 16px;border-radius:999px;font-weight:700;font-size:14px;color:#5B7FA6;animation:fbDrift 6.5s ease-in-out .5s infinite;pointer-events:none;">🩸 Iron</span>
-    <span aria-hidden="true" style="position:absolute;top:300px;right:9%;background:#fff;border:1px solid rgba(20,58,43,0.1);box-shadow:0 10px 30px rgba(20,58,43,0.1);padding:9px 16px;border-radius:999px;font-weight:700;font-size:14px;color:#9A8748;animation:fbDrift 7.5s ease-in-out 1.4s infinite;pointer-events:none;">🧬 B12</span>
-    <div style="max-width:1080px;margin:0 auto;padding:0 32px;text-align:center;position:relative;">
-      <span style="display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid rgba(20,58,43,0.1);box-shadow:0 8px 24px rgba(20,58,43,0.05);padding:8px 16px;border-radius:999px;font-size:13.5px;font-weight:600;color:#143A2B;margin-bottom:32px;">
-        <span style="width:7px;height:7px;border-radius:50%;background:#3E8E5E;animation:fbBob 2.5s ease-in-out infinite;"></span>
-        A field guide to what's really in your food
-      </span>
-      <h1 style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(42px,6.6vw,84px);line-height:1.0;letter-spacing:-0.04em;color:#15271D;margin:0 0 24px;text-wrap:balance;">Explore every bite,<br><span style="background:linear-gradient(100deg,#B5503C,#7A5237 45%,#3E8E5E);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#3E8E5E;">nutrient by nutrient.</span></h1>
-      <p style="font-size:clamp(18px,2.1vw,22px);line-height:1.55;color:#52614F;max-width:660px;margin:0 auto 14px;text-wrap:pretty;">No pitch, no cart — just the science. What causes each deficiency, what's inside each food, how it measures against your RDA, and why it matters differently at every stage of life.</p>
+  <section style="position:relative;overflow:hidden;padding:150px 0 70px;background:radial-gradient(circle at 20% 20%, #FFD23F, #FF8A00 60%, #FF6A2C);">
+    <div aria-hidden="true" data-ghost style="position:absolute;top:180px;left:50%;transform:translateX(-50%);font-family:'Sora',sans-serif;font-weight:800;font-size:min(22vw,340px);line-height:1;letter-spacing:-0.05em;color:rgba(26,16,51,0.06);white-space:nowrap;pointer-events:none;user-select:none;">FUEL UP</div>
+    <div aria-hidden="true" data-ghost style="position:absolute;top:120px;left:6%;width:130px;height:130px;border:4px solid #1A1033;border-radius:50%;background:#FF3D8B;animation:fbFloat 7s ease-in-out infinite;box-shadow:6px 6px 0 rgba(26,16,51,0.25);"></div>
+    <div aria-hidden="true" data-ghost style="position:absolute;bottom:80px;left:12%;width:70px;height:70px;background:#2D5BFF;border:4px solid #1A1033;border-radius:16px;animation:fbWobble 5s ease-in-out infinite;"></div>
+    <div aria-hidden="true" data-ghost style="position:absolute;top:150px;right:7%;width:96px;height:96px;background:#C6FF3D;border:4px solid #1A1033;border-radius:50%;animation:fbBob 4s ease-in-out infinite;"></div>
+    <div aria-hidden="true" data-ghost style="position:absolute;bottom:120px;right:11%;width:0;height:0;border-left:34px solid transparent;border-right:34px solid transparent;border-bottom:60px solid #6C2BD9;animation:fbFloat 6s ease-in-out .6s infinite;"></div>
+
+    <div style="max-width:1000px;margin:0 auto;padding:0 24px;text-align:center;position:relative;">
+      <span style="display:inline-flex;align-items:center;gap:8px;background:#1A1033;color:#FFD23F;padding:9px 18px;border-radius:999px;font-size:13px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:26px;transform:rotate(-1.5deg);box-shadow:4px 4px 0 #FF3D8B;">🔬 A field guide to your food</span>
+      <h1 style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(46px,8vw,104px);line-height:0.92;letter-spacing:-0.045em;color:#1A1033;margin:0 0 22px;text-wrap:balance;">You're missing<br>nutrients.<br><span style="display:inline-block;background:#1A1033;color:#C6FF3D;padding:2px 18px;border-radius:16px;transform:rotate(-1.5deg);box-shadow:8px 8px 0 #2D5BFF;margin-top:8px;">We fill them in.</span></h1>
+      <p style="font-size:clamp(18px,2.2vw,23px);font-weight:600;line-height:1.5;color:#3A1A0A;max-width:640px;margin:26px auto 0;text-wrap:pretty;">No pitch. No cart. Just the loud truth about what your body's short on — and the three foods that top you back up.</p>
     </div>
 
-    <div style="max-width:1120px;margin:56px auto 0;padding:0 32px;">
-      <div data-rcol style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;">
-        <a href="#truffle" data-scroll style="text-decoration:none;background:#fff;border:1px solid rgba(20,58,43,0.1);border-radius:24px;overflow:hidden;transition:transform .35s ease, box-shadow .35s ease;" style-hover="transform:translateY(-6px);box-shadow:0 30px 60px rgba(20,58,43,0.12);">
-          <div data-pop style="position:relative;height:240px;overflow:hidden;">
-            <img src="./images/truffle.jpg" alt="Truffle"> alt="Dark Chocolate Truffle" style="width:100%;height:100%;object-fit:cover;animation:fbZoom 16s ease-in-out infinite alternate;"></img>
-            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.5),rgba(255,255,255,0) 45%);mix-blend-mode:soft-light;animation:fbGloss 6s ease-in-out infinite;pointer-events:none;"></div>
+    <div style="max-width:1180px;margin:52px auto 0;padding:0 24px;position:relative;">
+      <div data-rcol style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+        <a href="#truffle" data-scroll data-card style="text-decoration:none;background:#FFD23F;border:3px solid #1A1033;border-radius:22px;overflow:hidden;box-shadow:8px 8px 0 #1A1033;">
+          <div data-pop style="position:relative;height:220px;overflow:hidden;background:#FF6A2C;">
+            <img src="/.images/truffle.png" alt="Dark Chocolate Truffle" style="width:100%;height:100%;object-fit:cover;animation:fbZoom 15s ease-in-out infinite alternate;"></img>
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.55),transparent 45%);mix-blend-mode:soft-light;animation:fbGloss 5.5s ease-in-out infinite;pointer-events:none;"></div>
+            <span style="position:absolute;top:12px;left:12px;background:#FFD23F;border:2.5px solid #1A1033;font-weight:800;font-size:12px;padding:5px 11px;border-radius:999px;transform:rotate(-4deg);">☀️ VITAMIN D</span>
           </div>
-          <div style="padding:24px 26px 28px;">
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#B5503C;">Vitamin D</span>
-            <h3 style="font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:#15271D;margin:6px 0 4px;">Dark Chocolate Truffle</h3>
-            <span style="font-size:15px;color:#52614F;">Explore the protocol →</span>
-          </div>
+          <div style="padding:18px 22px 22px;"><h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:21px;color:#1A1033;margin:0 0 10px;">Dark Chocolate Truffle</h3><div style="display:flex;align-items:center;gap:9px;"><span style="font-family:'Sora',sans-serif;font-weight:800;font-size:30px;line-height:1;color:#1A1033;">100%</span><span style="font-size:13px;font-weight:700;color:#3A1A0A;line-height:1.2;">daily Vitamin D<br>per truffle</span></div><span style="display:inline-block;margin-top:12px;font-size:14px;font-weight:800;color:#1A1033;">Explore #01 →</span></div>
         </a>
-        <a href="#laddu" data-scroll style="text-decoration:none;background:#fff;border:1px solid rgba(20,58,43,0.1);border-radius:24px;overflow:hidden;transition:transform .35s ease, box-shadow .35s ease;" style-hover="transform:translateY(-6px);box-shadow:0 30px 60px rgba(20,58,43,0.12);">
-          <div data-pop style="position:relative;height:240px;overflow:hidden;">
-            <img src="./images/laddu.jpg" alt="Fibre-Rich Protein Laddu" style="width:100%;height:100%;object-fit:cover;animation:fbZoom 17s ease-in-out infinite alternate;"></img>
+        <a href="#laddu" data-scroll data-card style="text-decoration:none;background:#14CFA6;border:3px solid #1A1033;border-radius:22px;overflow:hidden;box-shadow:8px 8px 0 #1A1033;">
+          <div data-pop style="position:relative;height:220px;overflow:hidden;background:#0FB894;">
+            <img src="/.images/laddu.png" alt="Fibre-Rich Protein Laddu" style="width:100%;height:100%;object-fit:cover;animation:fbZoom 16s ease-in-out infinite alternate;"></img>
+            <span style="position:absolute;top:12px;left:12px;background:#C6FF3D;border:2.5px solid #1A1033;font-weight:800;font-size:12px;padding:5px 11px;border-radius:999px;transform:rotate(-4deg);">🌾 FIBRE + PROTEIN</span>
           </div>
-          <div style="padding:24px 26px 28px;">
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#3E8E5E;">Protein &amp; Fibre</span>
-            <h3 style="font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:#15271D;margin:6px 0 4px;">Fibre-Rich Protein Laddu</h3>
-            <span style="font-size:15px;color:#52614F;">Explore the protocol →</span>
-          </div>
+          <div style="padding:18px 22px 22px;"><h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:21px;color:#1A1033;margin:0 0 10px;">Fibre-Rich Protein Laddu</h3><div style="display:flex;align-items:center;gap:9px;"><span style="font-family:'Sora',sans-serif;font-weight:800;font-size:30px;line-height:1;color:#1A1033;">19g</span><span style="font-size:13px;font-weight:700;color:#0A3D30;line-height:1.2;">protein + fibre<br>per laddu</span></div><span style="display:inline-block;margin-top:12px;font-size:14px;font-weight:800;color:#1A1033;">Explore #02 →</span></div>
         </a>
-        <a href="#powder" data-scroll style="text-decoration:none;background:#fff;border:1px solid rgba(20,58,43,0.1);border-radius:24px;overflow:hidden;transition:transform .35s ease, box-shadow .35s ease;" style-hover="transform:translateY(-6px);box-shadow:0 30px 60px rgba(20,58,43,0.12);">
-          <div data-pop style="position:relative;height:240px;overflow:hidden;">
-            <img src="./images/powder.jpg" alt="Vitality Wellness Powder" style="width:100%;height:100%;object-fit:cover;animation:fbZoom 18s ease-in-out infinite alternate;"></img>
+        <a href="#powder" data-scroll data-card style="text-decoration:none;background:#7FB0FF;border:3px solid #1A1033;border-radius:22px;overflow:hidden;box-shadow:8px 8px 0 #1A1033;">
+          <div data-pop style="position:relative;height:220px;overflow:hidden;background:#2D5BFF;display:flex;align-items:center;justify-content:center;">
+            <img src="/.images/powder.png" alt="Vitality Wellness Powder" style="width:100%;height:100%;object-fit:contain;padding:14px;"></img>
+            <span style="position:absolute;top:12px;left:12px;background:#7FB0FF;border:2.5px solid #1A1033;font-weight:800;font-size:12px;padding:5px 11px;border-radius:999px;transform:rotate(-4deg);">🩸 IRON · B12</span>
           </div>
-          <div style="padding:24px 26px 28px;">
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#5B7FA6;">Iron · B12 · Folate</span>
-            <h3 style="font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:#15271D;margin:6px 0 4px;">Vitality Wellness Powder</h3>
-            <span style="font-size:15px;color:#52614F;">Explore the protocol →</span>
-          </div>
+          <div style="padding:18px 22px 22px;"><h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:21px;color:#1A1033;margin:0 0 10px;">Vitality Wellness Powder</h3><div style="display:flex;align-items:center;gap:9px;"><span style="font-family:'Sora',sans-serif;font-weight:800;font-size:30px;line-height:1;color:#1A1033;">3-in-1</span><span style="font-size:13px;font-weight:700;color:#152A52;line-height:1.2;">iron, B12 &amp; folate<br>per scoop</span></div><span style="display:inline-block;margin-top:12px;font-size:14px;font-weight:800;color:#1A1033;">Explore #03 →</span></div>
         </a>
       </div>
     </div>
   </section>
 
-  <section style="position:relative;overflow:hidden;background:#0E2A1F;color:#F4F0E7;padding:96px 0 92px;">
-    <div aria-hidden="true" style="position:absolute;top:0;left:0;width:60%;height:100%;background:linear-gradient(90deg,rgba(111,181,140,0) ,rgba(111,181,140,0.12),rgba(111,181,140,0));animation:fbShimmer 6s ease-in-out infinite;pointer-events:none;"></div>
-    <div style="max-width:1120px;margin:0 auto;padding:0 32px;position:relative;">
-      <div data-reveal style="text-align:center;max-width:720px;margin:0 auto 56px;">
-        <span style="display:inline-block;font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#6FB58C;margin-bottom:18px;">The gap nobody feels — until it's a problem</span>
-        <h2 style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(32px,4.8vw,58px);line-height:1.03;letter-spacing:-0.03em;color:#F4F0E7;margin:0;">You're running low on more<br>than you think.</h2>
-      </div>
-      <div data-rcol style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(233,223,203,0.16);border:1px solid rgba(233,223,203,0.16);border-radius:24px;overflow:hidden;">
-        <div style="background:#0E2A1F;padding:46px 36px;text-align:center;">
-          <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(56px,8vw,92px);line-height:1;letter-spacing:-0.04em;color:#E0A93B;"><span data-count data-to="13">13</span></div>
-          <p style="margin:16px 0 0;font-size:16.5px;line-height:1.5;color:rgba(233,223,203,0.82);">essential vitamins your body <b style="color:#F4F0E7;">can't make on its own</b> — all must come from food.</p>
-        </div>
-        <div style="background:#0E2A1F;padding:46px 36px;text-align:center;">
-          <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(56px,8vw,92px);line-height:1;letter-spacing:-0.04em;color:#6FB58C;"><span data-count data-to="70" data-suffix="%">70%</span></div>
-          <p style="margin:16px 0 0;font-size:16.5px;line-height:1.5;color:rgba(233,223,203,0.82);">of urban Indians are <b style="color:#F4F0E7;">deficient in Vitamin D</b> without ever noticing.</p>
-        </div>
-        <div style="background:#0E2A1F;padding:46px 36px;text-align:center;">
-          <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(56px,8vw,92px);line-height:1;letter-spacing:-0.04em;color:#7FA6CC;"><span data-count data-to="1">1</span> in 2</div>
-          <p style="margin:16px 0 0;font-size:16.5px;line-height:1.5;color:rgba(233,223,203,0.82);">women live with <b style="color:#F4F0E7;">iron deficiency or anaemia</b> — tired, and told it's normal.</p>
-        </div>
-      </div>
-      <p data-reveal style="text-align:center;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(22px,3vw,34px);letter-spacing:-0.02em;color:#F4F0E7;margin:52px auto 0;max-width:760px;">You're missing them. <span style="background:linear-gradient(100deg,#6FB58C,#E0A93B);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#6FB58C;">Every FitBite fills them back in.</span></p>
-    </div>
-  </section>
-
-  <div style="background:#143A2B;overflow:hidden;padding:16px 0;">
-    <div style="display:flex;width:max-content;animation:fbMarquee 26s linear infinite;white-space:nowrap;font-family:'Sora',sans-serif;font-weight:700;font-size:19px;letter-spacing:0.02em;color:#E9DFCB;">
-      <span style="display:inline-flex;gap:34px;padding-right:34px;"><span>☀️ VITAMIN D</span><span style="color:#6FB58C;">•</span><span>🌾 FIBRE</span><span style="color:#6FB58C;">•</span><span>🩸 IRON</span><span style="color:#6FB58C;">•</span><span>🧬 B12</span><span style="color:#6FB58C;">•</span><span>🦴 CALCIUM</span><span style="color:#6FB58C;">•</span><span>💪 PROTEIN</span><span style="color:#6FB58C;">•</span><span>🌙 MAGNESIUM</span><span style="color:#6FB58C;">•</span></span>
-      <span style="display:inline-flex;gap:34px;padding-right:34px;"><span>☀️ VITAMIN D</span><span style="color:#6FB58C;">•</span><span>🌾 FIBRE</span><span style="color:#6FB58C;">•</span><span>🩸 IRON</span><span style="color:#6FB58C;">•</span><span>🧬 B12</span><span style="color:#6FB58C;">•</span><span>🦴 CALCIUM</span><span style="color:#6FB58C;">•</span><span>💪 PROTEIN</span><span style="color:#6FB58C;">•</span><span>🌙 MAGNESIUM</span><span style="color:#6FB58C;">•</span></span>
+  <div style="background:#1A1033;overflow:hidden;padding:14px 0;border-top:3px solid #1A1033;border-bottom:3px solid #1A1033;">
+    <div style="display:flex;width:max-content;animation:fbMarquee 22s linear infinite;white-space:nowrap;font-family:'Sora',sans-serif;font-weight:800;font-size:18px;letter-spacing:0.02em;">
+      <span style="display:inline-flex;gap:26px;padding-right:26px;"><span style="color:#FFD23F;">☀️ VITAMIN D</span><span style="color:#FF3D8B;">◆</span><span style="color:#C6FF3D;">🌾 FIBRE</span><span style="color:#FF3D8B;">◆</span><span style="color:#7FB0FF;">🩸 IRON</span><span style="color:#FF3D8B;">◆</span><span style="color:#FFD23F;">🧬 B12</span><span style="color:#FF3D8B;">◆</span><span style="color:#C6FF3D;">💪 PROTEIN</span><span style="color:#FF3D8B;">◆</span><span style="color:#7FB0FF;">🦴 CALCIUM</span><span style="color:#FF3D8B;">◆</span><span style="color:#FFD23F;">🌙 MAGNESIUM</span><span style="color:#FF3D8B;">◆</span></span>
+      <span style="display:inline-flex;gap:26px;padding-right:26px;"><span style="color:#FFD23F;">☀️ VITAMIN D</span><span style="color:#FF3D8B;">◆</span><span style="color:#C6FF3D;">🌾 FIBRE</span><span style="color:#FF3D8B;">◆</span><span style="color:#7FB0FF;">🩸 IRON</span><span style="color:#FF3D8B;">◆</span><span style="color:#FFD23F;">🧬 B12</span><span style="color:#FF3D8B;">◆</span><span style="color:#C6FF3D;">💪 PROTEIN</span><span style="color:#FF3D8B;">◆</span><span style="color:#7FB0FF;">🦴 CALCIUM</span><span style="color:#FF3D8B;">◆</span><span style="color:#FFD23F;">🌙 MAGNESIUM</span><span style="color:#FF3D8B;">◆</span></span>
     </div>
   </div>
 
-  <section id="truffle" style="padding:90px 0 96px;border-top:6px solid #B5503C;scroll-margin-top:80px;background:linear-gradient(180deg,rgba(181,80,60,0.05),rgba(244,240,231,0) 340px);">
-    <div style="max-width:1200px;margin:0 auto;padding:0 32px;">
-
-      <div data-reveal data-rcol style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;align-items:center;margin-bottom:80px;">
-        <div data-pop style="position:relative;border-radius:26px;overflow:hidden;box-shadow:0 30px 64px rgba(20,58,43,0.16);aspect-ratio:1/1;">
-          <img src="./images/truffle.jpg" alt="Dark Chocolate Truffle" style="width:100%;height:100%;object-fit:cover;animation:fbZoom 16s ease-in-out infinite alternate;"></img>
-          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.5),rgba(255,255,255,0) 45%);mix-blend-mode:soft-light;animation:fbGloss 6s ease-in-out infinite;pointer-events:none;"></div>
+  <section style="position:relative;overflow:hidden;background:#6C2BD9;color:#fff;padding:84px 0;">
+    <div aria-hidden="true" data-ghost style="position:absolute;top:40px;right:8%;width:90px;height:90px;border:4px solid #C6FF3D;border-radius:50%;animation:fbSpin 18s linear infinite;"></div>
+    <div style="max-width:1120px;margin:0 auto;padding:0 24px;position:relative;">
+      <div data-reveal style="text-align:center;max-width:720px;margin:0 auto 46px;">
+        <span style="display:inline-block;background:#C6FF3D;color:#1A1033;font-size:12.5px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:7px 16px;border-radius:999px;border:2.5px solid #1A1033;margin-bottom:20px;transform:rotate(-1.5deg);">The gap nobody feels — until it bites</span>
+        <h2 style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(32px,5vw,60px);line-height:1.0;letter-spacing:-0.03em;color:#fff;margin:0;">Big numbers.<br>Bigger problem.</h2>
+      </div>
+      <div data-rcol style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+        <div data-reveal style="background:#FF3D8B;border:3px solid #1A1033;border-radius:22px;padding:40px 30px;text-align:center;box-shadow:8px 8px 0 #1A1033;">
+          <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(58px,9vw,96px);line-height:0.9;letter-spacing:-0.04em;color:#1A1033;"><span data-count data-to="13">13</span></div>
+          <p style="margin:14px 0 0;font-size:16px;font-weight:600;line-height:1.45;color:#1A1033;">essential vitamins your body <b>can't make</b> — every one must come from food.</p>
         </div>
-        <div>
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;"><span style="font-family:'Sora',sans-serif;font-weight:800;font-size:64px;line-height:0.8;letter-spacing:-0.04em;color:#B5503C;">01</span><span style="font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#B5503C;">The sunshine gap</span></div>
-          <h2 style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:#15271D;margin:0 0 18px;">Dark Chocolate Truffle</h2>
-          <p style="font-size:19px;line-height:1.6;color:#52614F;margin:0 0 26px;max-width:520px;">A genuinely good 70% dark chocolate that carries a full daily dose of Vitamin D3 — with the K2 and magnesium that let your body actually use it.</p>
-          <div data-rcol style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:0;border-radius:18px;overflow:hidden;border:1px solid rgba(181,80,60,0.28);max-width:540px;margin:0 0 28px;">
-            <div style="background:#F3E4DE;padding:20px 24px;"><div style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#A6432F;margin-bottom:4px;">You're missing</div><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:40px;line-height:1;color:#B5503C;"><span data-count data-to="70" data-suffix="%">70%</span></div><div style="font-size:13.5px;color:#6E2C1F;margin-top:4px;">run low on Vitamin D</div></div>
-            <div style="background:#fff;padding:0 10px;font-size:22px;color:#B5503C;">→</div>
-            <div style="background:#143A2B;padding:20px 24px;"><div style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6FB58C;margin-bottom:4px;">We fill it</div><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:40px;line-height:1;color:#F4F0E7;"><span data-count data-to="100" data-suffix="%">100%</span></div><div style="font-size:13.5px;color:rgba(233,223,203,0.8);margin-top:4px;">of your daily D3, per truffle</div></div>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;">
-            <span style="font-size:14px;font-weight:600;color:#143A2B;background:#EDE6D4;border-radius:999px;padding:8px 15px;">800 IU Vitamin D3</span>
-            <span style="font-size:14px;font-weight:600;color:#143A2B;background:#EDE6D4;border-radius:999px;padding:8px 15px;">75mcg K2 (MK-7)</span>
-            <span style="font-size:14px;font-weight:600;color:#143A2B;background:#EDE6D4;border-radius:999px;padding:8px 15px;">120mg Magnesium</span>
-          </div>
+        <div data-reveal style="background:#FFD23F;border:3px solid #1A1033;border-radius:22px;padding:40px 30px;text-align:center;box-shadow:8px 8px 0 #1A1033;">
+          <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(58px,9vw,96px);line-height:0.9;letter-spacing:-0.04em;color:#1A1033;"><span data-count data-to="70" data-suffix="%">70%</span></div>
+          <p style="margin:14px 0 0;font-size:16px;font-weight:600;line-height:1.45;color:#1A1033;">of urban Indians are <b>low on Vitamin D</b> and have no idea.</p>
+        </div>
+        <div data-reveal style="background:#C6FF3D;border:3px solid #1A1033;border-radius:22px;padding:40px 30px;text-align:center;box-shadow:8px 8px 0 #1A1033;">
+          <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(58px,9vw,96px);line-height:0.9;letter-spacing:-0.04em;color:#1A1033;"><span data-count data-to="1">1</span><span style="font-size:0.5em;"> in 2</span></div>
+          <p style="margin:14px 0 0;font-size:16px;font-weight:600;line-height:1.45;color:#1A1033;">women live with <b>iron deficiency</b> — tired, and told it's normal.</p>
         </div>
       </div>
-
-      <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
-        <div data-reveal style="background:#fff;border:1px solid rgba(20,58,43,0.1);border-radius:22px;padding:38px 36px;">
-          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#B5503C;margin-bottom:16px;">The cause</div>
-          <h3 style="font-family:'Sora',sans-serif;font-weight:600;font-size:24px;color:#15271D;margin:0 0 14px;">Why so many are short on Vitamin D</h3>
-          <p style="margin:0 0 14px;font-size:16.5px;color:#52614F;">Your skin makes Vitamin D from direct sunlight — but modern life blocks the supply chain at every step.</p>
-          <ul style="margin:0;padding-left:20px;font-size:16px;color:#52614F;line-height:1.7;">
-            <li>Indoor days, commutes and screens mean little midday sun.</li>
-            <li>Sunscreen, pollution and clothing filter out UVB rays.</li>
-            <li>Melanin-rich skin needs far longer sun exposure to produce the same amount.</li>
-            <li>Very few foods carry meaningful Vitamin D naturally.</li>
-          </ul>
-        </div>
-        <div data-reveal style="background:#fff;border:1px solid rgba(20,58,43,0.1);border-radius:22px;padding:38px 36px;">
-          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#B5503C;margin-bottom:16px;">What's inside</div>
-          <h3 style="font-family:'Sora',sans-serif;font-weight:600;font-size:24px;color:#15271D;margin:0 0 18px;">Clean-label ingredients</h3>
-          <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#7A5237;flex-shrink:0;"></span>70% dark chocolate</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#E0A93B;flex-shrink:0;"></span>Vitamin D3 (cholecalciferol)</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#9A8748;flex-shrink:0;"></span>Vitamin K2 as MK-7</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#5B7FA6;flex-shrink:0;"></span>Magnesium citrate</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#B5503C;flex-shrink:0;"></span>Roasted almonds</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#3E8E5E;flex-shrink:0;"></span>A touch of jaggery</div>
-          </div>
-          <p style="margin:20px 0 0;font-size:14px;color:#8A9384;">No maltodextrin · no artificial sweeteners · no proprietary blends.</p>
-        </div>
-      </div>
-
-      <div data-reveal style="background:#0E2A1F;color:#E9DFCB;border-radius:24px;padding:44px 44px 40px;margin-bottom:24px;">
-        <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6FB58C;margin-bottom:8px;">Delivered vs your RDA</div>
-        <h3 style="font-family:'Sora',sans-serif;font-weight:600;font-size:26px;color:#F4F0E7;margin:0 0 28px;">How one truffle measures up</h3>
-        <div style="display:flex;flex-direction:column;gap:22px;">
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;"><span style="font-weight:600;color:#F4F0E7;font-size:16.5px;">Vitamin D3 · 800 IU</span><span style="font-weight:700;color:#6FB58C;font-size:16.5px;">133% RDA</span></div>
-            <div style="height:12px;border-radius:99px;background:rgba(233,223,203,0.14);overflow:hidden;"><div data-bar data-pct="100" style="height:100%;width:100%;border-radius:99px;background:#6FB58C;"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;"><span style="font-weight:600;color:#F4F0E7;font-size:16.5px;">Vitamin K2 · 75 mcg</span><span style="font-weight:700;color:#E9DFCB;font-size:16.5px;">62% RDA</span></div>
-            <div style="height:12px;border-radius:99px;background:rgba(233,223,203,0.14);overflow:hidden;"><div data-bar data-pct="62" style="height:100%;width:62%;border-radius:99px;background:#E0A93B;"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;"><span style="font-weight:600;color:#F4F0E7;font-size:16.5px;">Magnesium · 120 mg</span><span style="font-weight:700;color:#E9DFCB;font-size:16.5px;">30% RDA</span></div>
-            <div style="height:12px;border-radius:99px;background:rgba(233,223,203,0.14);overflow:hidden;"><div data-bar data-pct="30" style="height:100%;width:30%;border-radius:99px;background:#5B7FA6;"></div></div>
-          </div>
-        </div>
-        <p style="margin:24px 0 0;font-size:13.5px;color:rgba(233,223,203,0.5);">RDA reference for adults. Vitamin D bar capped at 100% for scale. Individual needs vary — test if unsure.</p>
-      </div>
-
-      <div data-rcol style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:24px;margin-bottom:24px;">
-        <div data-reveal style="background:#fff;border:1px solid rgba(20,58,43,0.1);border-radius:22px;padding:38px 36px;">
-          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#B5503C;margin-bottom:18px;">What it helps with</div>
-          <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="font-size:20px;line-height:1;">🦴</span><div><div style="font-weight:600;color:#15271D;font-size:16px;">Bone strength</div><div style="font-size:14.5px;color:#52614F;">D3 + K2 direct calcium into bone.</div></div></div>
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="font-size:20px;line-height:1;">🛡️</span><div><div style="font-weight:600;color:#15271D;font-size:16px;">Immunity</div><div style="font-size:14.5px;color:#52614F;">Supports immune-cell function.</div></div></div>
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="font-size:20px;line-height:1;">💪</span><div><div style="font-weight:600;color:#15271D;font-size:16px;">Muscle recovery</div><div style="font-size:14.5px;color:#52614F;">Less soreness between sessions.</div></div></div>
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="font-size:20px;line-height:1;">🌙</span><div><div style="font-weight:600;color:#15271D;font-size:16px;">Mood &amp; sleep</div><div style="font-size:14.5px;color:#52614F;">Linked to steadier mood and rest.</div></div></div>
-          </div>
-        </div>
-        <div data-reveal style="display:grid;grid-template-rows:1fr 1fr;gap:24px;">
-          <div style="background:#E2EADD;border-radius:22px;padding:28px 30px;">
-            <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#2F6B47;margin-bottom:12px;">✓ Why you'd reach for it</div>
-            <p style="margin:0;font-size:15.5px;color:#274733;line-height:1.55;">Mostly-indoor days, poor recovery, bone-health worries, or a blood test that came back low.</p>
-          </div>
-          <div style="background:#F3E4DE;border-radius:22px;padding:28px 30px;">
-            <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#A6432F;margin-bottom:12px;">✕ Why you might not</div>
-            <p style="margin:0;font-size:15.5px;color:#6E2C1F;line-height:1.55;">Your D levels already sit healthy, or you have a cocoa allergy. Very high doses need a doctor's sign-off.</p>
-          </div>
-        </div>
-      </div>
-
+      <p data-reveal style="text-align:center;font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(22px,3.4vw,38px);letter-spacing:-0.02em;color:#fff;margin:44px auto 0;max-width:800px;">You're missing them. <span style="color:#C6FF3D;">We fill them back in.</span></p>
     </div>
   </section>
 
-  <section id="laddu" style="padding:90px 0 96px;background:#ECE3D1;border-top:6px solid #3E8E5E;scroll-margin-top:80px;">
-    <div style="max-width:1200px;margin:0 auto;padding:0 32px;">
+  <section id="truffle" style="padding:80px 0;background:#FF6A2C;scroll-margin-top:80px;position:relative;overflow:hidden;">
+    <div aria-hidden="true" data-ghost style="position:absolute;top:60px;right:-40px;width:200px;height:200px;border:5px solid #1A1033;border-radius:50%;animation:fbSpin 30s linear infinite;pointer-events:none;"></div>
+    <div style="max-width:1180px;margin:0 auto;padding:0 24px;position:relative;">
+      <div data-rcol style="display:grid;grid-template-columns:0.85fr 1.15fr;gap:44px;align-items:center;margin-bottom:56px;">
+        <div data-pop style="position:relative;border:4px solid #1A1033;border-radius:26px;overflow:hidden;box-shadow:12px 12px 0 #1A1033;aspect-ratio:1/1;background:#FFD23F;">
+          <img src="/.images/truffle.png" alt="Dark Chocolate Truffle" style="width:100%;height:100%;object-fit:cover;animation:fbZoom 15s ease-in-out infinite alternate;"></img>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.55),transparent 45%);mix-blend-mode:soft-light;animation:fbGloss 5.5s ease-in-out infinite;pointer-events:none;"></div>
+        </div>
+        <div>
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;"><span style="font-family:'Sora',sans-serif;font-weight:800;font-size:72px;line-height:0.8;color:#1A1033;-webkit-text-stroke:2px #1A1033;">01</span><span style="background:#1A1033;color:#FFD23F;font-size:12.5px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:7px 14px;border-radius:999px;transform:rotate(-2deg);">The sunshine gap</span></div>
+          <h2 style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(34px,5vw,58px);line-height:0.98;letter-spacing:-0.03em;color:#1A1033;margin:0 0 16px;">Dark Chocolate Truffle</h2>
+          <p style="font-size:19px;font-weight:600;line-height:1.5;color:#3A1A0A;margin:0 0 24px;max-width:520px;">A proper 70% dark chocolate that smuggles in a full day of Vitamin D3 — plus the K2 and magnesium that make it actually absorb.</p>
+          <div data-rcol style="display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:0;border:3px solid #1A1033;border-radius:18px;overflow:hidden;max-width:520px;box-shadow:6px 6px 0 #1A1033;">
+            <div style="background:#fff;padding:18px 22px;"><div style="font-size:11px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#FF6A2C;margin-bottom:2px;">You're missing</div><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:38px;line-height:1;color:#1A1033;"><span data-count data-to="70" data-suffix="%">70%</span></div><div style="font-size:13px;font-weight:600;color:#3A1A0A;">run low on Vit D</div></div>
+            <div style="background:#FFD23F;display:flex;align-items:center;padding:0 8px;font-size:22px;font-weight:800;">→</div>
+            <div style="background:#1A1033;padding:18px 22px;"><div style="font-size:11px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#C6FF3D;margin-bottom:2px;">We fill it</div><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:38px;line-height:1;color:#fff;"><span data-count data-to="100" data-suffix="%">100%</span></div><div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.8);">daily D3 per truffle</div></div>
+          </div>
+        </div>
+      </div>
 
-      <div data-reveal data-rcol style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:center;margin-bottom:80px;">
+      <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+        <div data-reveal data-card style="background:#fff;border:3px solid #1A1033;border-radius:22px;padding:34px 32px;box-shadow:8px 8px 0 #1A1033;">
+          <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#FF6A2C;margin-bottom:14px;">⚡ The cause</div>
+          <h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:23px;color:#1A1033;margin:0 0 12px;">Why so many run low on D</h3>
+          <ul style="margin:0;padding-left:20px;font-size:16px;font-weight:500;color:#3A1A0A;line-height:1.7;">
+            <li>Indoor days &amp; commutes = barely any midday sun.</li>
+            <li>Sunscreen, pollution &amp; clothing block UVB rays.</li>
+            <li>Melanin-rich skin needs far longer in the sun.</li>
+            <li>Almost no foods carry meaningful Vitamin D.</li>
+          </ul>
+        </div>
+        <div data-reveal data-card style="background:#fff;border:3px solid #1A1033;border-radius:22px;padding:34px 32px;box-shadow:8px 8px 0 #1A1033;">
+          <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#FF6A2C;margin-bottom:14px;">🧾 What's inside</div>
+          <h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:23px;color:#1A1033;margin:0 0 16px;">Clean-label, no blends</h3>
+          <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">70% dark chocolate</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Vitamin D3</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Vitamin K2 (MK-7)</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Magnesium</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Roasted almonds</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">A touch of jaggery</span>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal style="background:#1A1033;border:3px solid #1A1033;border-radius:22px;padding:38px 36px;margin-bottom:20px;box-shadow:8px 8px 0 rgba(26,16,51,0.35);">
+        <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#C6FF3D;margin-bottom:6px;">📊 Delivered vs your RDA</div>
+        <h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:24px;color:#fff;margin:0 0 24px;">How one truffle stacks up</h3>
+        <div style="display:flex;flex-direction:column;gap:18px;">
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span style="font-weight:700;color:#fff;font-size:16px;">Vitamin D3 · 800 IU</span><span style="font-weight:800;color:#C6FF3D;font-size:16px;">133% RDA</span></div><div style="height:14px;border-radius:99px;background:rgba(255,255,255,0.14);overflow:hidden;border:2px solid #000;"><div data-bar style="height:100%;width:100%;border-radius:99px;background:#C6FF3D;"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span style="font-weight:700;color:#fff;font-size:16px;">Vitamin K2 · 75 mcg</span><span style="font-weight:800;color:#FFD23F;font-size:16px;">62% RDA</span></div><div style="height:14px;border-radius:99px;background:rgba(255,255,255,0.14);overflow:hidden;border:2px solid #000;"><div data-bar style="height:100%;width:62%;border-radius:99px;background:#FFD23F;"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span style="font-weight:700;color:#fff;font-size:16px;">Magnesium · 120 mg</span><span style="font-weight:800;color:#FF3D8B;font-size:16px;">30% RDA</span></div><div style="height:14px;border-radius:99px;background:rgba(255,255,255,0.14);overflow:hidden;border:2px solid #000;"><div data-bar style="height:100%;width:30%;border-radius:99px;background:#FF3D8B;"></div></div></div>
+        </div>
+      </div>
+
+      <div data-rcol style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:20px;">
+        <div data-reveal data-card style="background:#fff;border:3px solid #1A1033;border-radius:22px;padding:34px 32px;box-shadow:8px 8px 0 #1A1033;">
+          <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#FF6A2C;margin-bottom:16px;">💥 What it helps with</div>
+          <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:22px;">🦴</span><div><b style="color:#1A1033;font-size:15.5px;">Bone strength</b><div style="font-size:13.5px;color:#3A1A0A;">D3 + K2 route calcium to bone.</div></div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:22px;">🛡️</span><div><b style="color:#1A1033;font-size:15.5px;">Immunity</b><div style="font-size:13.5px;color:#3A1A0A;">Supports immune-cell function.</div></div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:22px;">💪</span><div><b style="color:#1A1033;font-size:15.5px;">Recovery</b><div style="font-size:13.5px;color:#3A1A0A;">Less soreness between sessions.</div></div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:22px;">🌙</span><div><b style="color:#1A1033;font-size:15.5px;">Mood &amp; sleep</b><div style="font-size:13.5px;color:#3A1A0A;">Linked to steadier mood.</div></div></div>
+          </div>
+        </div>
+        <div data-reveal style="display:grid;grid-template-rows:1fr 1fr;gap:20px;">
+          <div style="background:#C6FF3D;border:3px solid #1A1033;border-radius:20px;padding:24px 26px;box-shadow:6px 6px 0 #1A1033;"><div style="font-size:12px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#1A1033;margin-bottom:8px;">✓ Reach for it if</div><p style="margin:0;font-size:15px;font-weight:600;color:#1A1033;line-height:1.45;">Indoor days, poor recovery, bone worries, or a blood test that came back low.</p></div>
+          <div style="background:#FF3D8B;border:3px solid #1A1033;border-radius:20px;padding:24px 26px;box-shadow:6px 6px 0 #1A1033;"><div style="font-size:12px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#fff;margin-bottom:8px;">✕ Maybe not if</div><p style="margin:0;font-size:15px;font-weight:600;color:#fff;line-height:1.45;">Your D is already healthy, or you have a cocoa allergy. High doses need a doctor.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="laddu" style="padding:80px 0;background:#14CFA6;scroll-margin-top:80px;position:relative;overflow:hidden;">
+    <div aria-hidden="true" data-ghost style="position:absolute;bottom:40px;left:-40px;width:170px;height:170px;background:#C6FF3D;border:5px solid #1A1033;border-radius:50%;animation:fbFloat 8s ease-in-out infinite;pointer-events:none;"></div>
+    <div style="max-width:1180px;margin:0 auto;padding:0 24px;position:relative;">
+      <div data-rcol style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:44px;align-items:center;margin-bottom:56px;">
         <div style="order:1;">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;"><span style="font-family:'Sora',sans-serif;font-weight:800;font-size:64px;line-height:0.8;letter-spacing:-0.04em;color:#3E8E5E;">02</span><span style="font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#3E8E5E;">The protein &amp; fibre gap</span></div>
-          <h2 style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:#15271D;margin:0 0 18px;">Fibre-Rich Protein Laddu</h2>
-          <p style="font-size:19px;line-height:1.6;color:#52614F;margin:0 0 26px;max-width:520px;">A traditional laddu rebuilt around millets, nuts and gut-friendly fibre — real protein and iron, with zero maltodextrin or hidden sugar.</p>
-          <div data-rcol style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:0;border-radius:18px;overflow:hidden;border:1px solid rgba(62,142,94,0.3);max-width:540px;margin:0 0 28px;">
-            <div style="background:#E2EADD;padding:20px 24px;"><div style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#2F6B47;margin-bottom:4px;">You're missing</div><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:40px;line-height:1;color:#3E8E5E;"><span data-count data-to="50" data-suffix="%">50%</span></div><div style="font-size:13.5px;color:#274733;margin-top:4px;">of the fibre you need daily</div></div>
-            <div style="background:#fff;padding:0 10px;font-size:22px;color:#3E8E5E;">→</div>
-            <div style="background:#143A2B;padding:20px 24px;"><div style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6FB58C;margin-bottom:4px;">We fill it</div><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:40px;line-height:1;color:#F4F0E7;"><span data-count data-to="19">19</span>g</div><div style="font-size:13.5px;color:rgba(233,223,203,0.8);margin-top:4px;">protein + fibre, per laddu</div></div>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;">
-            <span style="font-size:14px;font-weight:600;color:#143A2B;background:#E4D9C2;border-radius:999px;padding:8px 15px;">12g protein</span>
-            <span style="font-size:14px;font-weight:600;color:#143A2B;background:#E4D9C2;border-radius:999px;padding:8px 15px;">7g fibre</span>
-            <span style="font-size:14px;font-weight:600;color:#143A2B;background:#E4D9C2;border-radius:999px;padding:8px 15px;">8mg iron</span>
-            <span style="font-size:14px;font-weight:600;color:#143A2B;background:#E4D9C2;border-radius:999px;padding:8px 15px;">0g maltodextrin</span>
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;"><span style="font-family:'Sora',sans-serif;font-weight:800;font-size:72px;line-height:0.8;color:#1A1033;-webkit-text-stroke:2px #1A1033;">02</span><span style="background:#1A1033;color:#C6FF3D;font-size:12.5px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:7px 14px;border-radius:999px;transform:rotate(-2deg);">The fibre + protein gap</span></div>
+          <h2 style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(34px,5vw,58px);line-height:0.98;letter-spacing:-0.03em;color:#1A1033;margin:0 0 16px;">Fibre-Rich Protein Laddu</h2>
+          <p style="font-size:19px;font-weight:600;line-height:1.5;color:#233800;margin:0 0 24px;max-width:520px;">A traditional laddu rebuilt on millets, nuts &amp; gut-friendly fibre — real protein and iron, zero maltodextrin or hidden sugar.</p>
+          <div data-rcol style="display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:0;border:3px solid #1A1033;border-radius:18px;overflow:hidden;max-width:520px;box-shadow:6px 6px 0 #1A1033;">
+            <div style="background:#fff;padding:18px 22px;"><div style="font-size:11px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#5A9E00;margin-bottom:2px;">You're missing</div><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:38px;line-height:1;color:#1A1033;"><span data-count data-to="50" data-suffix="%">50%</span></div><div style="font-size:13px;font-weight:600;color:#233800;">of daily fibre</div></div>
+            <div style="background:#C6FF3D;display:flex;align-items:center;padding:0 8px;font-size:22px;font-weight:800;">→</div>
+            <div style="background:#1A1033;padding:18px 22px;"><div style="font-size:11px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#C6FF3D;margin-bottom:2px;">We fill it</div><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:38px;line-height:1;color:#fff;"><span data-count data-to="19">19</span>g</div><div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.8);">protein + fibre / laddu</div></div>
           </div>
         </div>
-        <div data-pop style="order:2;position:relative;border-radius:26px;overflow:hidden;box-shadow:0 30px 64px rgba(20,58,43,0.16);aspect-ratio:1/1;">
-          <img src="./images/laddu.jpg" alt="Fibre-Rich Protein Laddu" style="width:100%;height:100%;object-fit:cover;animation:fbZoom 17s ease-in-out infinite alternate;"></img>
+        <div data-pop style="order:2;position:relative;border:4px solid #1A1033;border-radius:26px;overflow:hidden;box-shadow:12px 12px 0 #1A1033;aspect-ratio:1/1;background:#C6FF3D;">
+          <img src="/.images/laddu.png" alt="Fibre-Rich Protein Laddu" style="width:100%;height:100%;object-fit:cover;animation:fbZoom 16s ease-in-out infinite alternate;"></img>
         </div>
       </div>
 
-      <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
-        <div data-reveal style="background:#fff;border:1px solid rgba(20,58,43,0.1);border-radius:22px;padding:38px 36px;">
-          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#3E8E5E;margin-bottom:16px;">The cause</div>
-          <h3 style="font-family:'Sora',sans-serif;font-weight:600;font-size:24px;color:#15271D;margin:0 0 14px;">Why protein and fibre run low</h3>
-          <p style="margin:0 0 14px;font-size:16.5px;color:#52614F;">Everyday Indian eating patterns quietly under-deliver on two of the most important nutrients.</p>
-          <ul style="margin:0;padding-left:20px;font-size:16px;color:#52614F;line-height:1.7;">
-            <li>Carb-forward plates — rice and roti dominate, protein sides are small.</li>
-            <li>Vegetarian diets without deliberate protein planning fall short.</li>
-            <li>Refined snacks replace whole grains, stripping out fibre.</li>
-            <li>Low fibre means poor digestion, unstable energy and constant hunger.</li>
+      <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+        <div data-reveal data-card style="background:#fff;border:3px solid #1A1033;border-radius:22px;padding:34px 32px;box-shadow:8px 8px 0 #1A1033;">
+          <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#5A9E00;margin-bottom:14px;">⚡ The cause</div>
+          <h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:23px;color:#1A1033;margin:0 0 12px;">Why protein &amp; fibre run low</h3>
+          <ul style="margin:0;padding-left:20px;font-size:16px;font-weight:500;color:#233800;line-height:1.7;">
+            <li>Carb-forward plates — rice &amp; roti dominate.</li>
+            <li>Veg diets without protein planning fall short.</li>
+            <li>Refined snacks strip out the fibre.</li>
+            <li>Low fibre = poor digestion &amp; constant hunger.</li>
           </ul>
         </div>
-        <div data-reveal style="background:#fff;border:1px solid rgba(20,58,43,0.1);border-radius:22px;padding:38px 36px;">
-          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#3E8E5E;margin-bottom:16px;">What's inside</div>
-          <h3 style="font-family:'Sora',sans-serif;font-weight:600;font-size:24px;color:#15271D;margin:0 0 18px;">Clean-label ingredients</h3>
-          <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#9A8748;flex-shrink:0;"></span>Millets (ragi, bajra)</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#3E8E5E;flex-shrink:0;"></span>Protein blend (whey/pea)</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#7A5237;flex-shrink:0;"></span>Almonds &amp; cashews</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#B89A5C;flex-shrink:0;"></span>Psyllium &amp; oat fibre</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#B5503C;flex-shrink:0;"></span>Dates (natural sweetness)</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#E0A93B;flex-shrink:0;"></span>A little ghee</div>
-          </div>
-          <p style="margin:20px 0 0;font-size:14px;color:#8A9384;">No maltodextrin · no refined sugar · no proprietary blends.</p>
-        </div>
-      </div>
-
-      <div data-reveal style="background:#0E2A1F;color:#E9DFCB;border-radius:24px;padding:44px 44px 40px;margin-bottom:24px;">
-        <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6FB58C;margin-bottom:8px;">Delivered vs your RDA</div>
-        <h3 style="font-family:'Sora',sans-serif;font-weight:600;font-size:26px;color:#F4F0E7;margin:0 0 28px;">How one laddu measures up</h3>
-        <div style="display:flex;flex-direction:column;gap:22px;">
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;"><span style="font-weight:600;color:#F4F0E7;font-size:16.5px;">Protein · 12 g</span><span style="font-weight:700;color:#E9DFCB;font-size:16.5px;">24% RDA</span></div>
-            <div style="height:12px;border-radius:99px;background:rgba(233,223,203,0.14);overflow:hidden;"><div data-bar data-pct="24" style="height:100%;width:24%;border-radius:99px;background:#6FB58C;"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;"><span style="font-weight:600;color:#F4F0E7;font-size:16.5px;">Fibre · 7 g</span><span style="font-weight:700;color:#E9DFCB;font-size:16.5px;">23% RDA</span></div>
-            <div style="height:12px;border-radius:99px;background:rgba(233,223,203,0.14);overflow:hidden;"><div data-bar data-pct="23" style="height:100%;width:23%;border-radius:99px;background:#9A8748;"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;"><span style="font-weight:600;color:#F4F0E7;font-size:16.5px;">Iron · 8 mg</span><span style="font-weight:700;color:#E9DFCB;font-size:16.5px;">44% RDA</span></div>
-            <div style="height:12px;border-radius:99px;background:rgba(233,223,203,0.14);overflow:hidden;"><div data-bar data-pct="44" style="height:100%;width:44%;border-radius:99px;background:#B5503C;"></div></div>
-          </div>
-        </div>
-        <p style="margin:24px 0 0;font-size:13.5px;color:rgba(233,223,203,0.5);">RDA reference for adults (protein ~50g, fibre ~30g, iron ~18mg). Values are per piece.</p>
-      </div>
-
-      <div data-rcol style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:24px;">
-        <div data-reveal style="background:#fff;border:1px solid rgba(20,58,43,0.1);border-radius:22px;padding:38px 36px;">
-          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#3E8E5E;margin-bottom:18px;">What it helps with</div>
-          <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="font-size:20px;line-height:1;">🌾</span><div><div style="font-weight:600;color:#15271D;font-size:16px;">Digestion</div><div style="font-size:14.5px;color:#52614F;">Fibre feeds a healthy gut.</div></div></div>
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="font-size:20px;line-height:1;">🔋</span><div><div style="font-weight:600;color:#15271D;font-size:16px;">Stable energy</div><div style="font-size:14.5px;color:#52614F;">No sugar-crash spikes.</div></div></div>
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="font-size:20px;line-height:1;">🍽️</span><div><div style="font-weight:600;color:#15271D;font-size:16px;">Satiety</div><div style="font-size:14.5px;color:#52614F;">Protein + fibre keep you full.</div></div></div>
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="font-size:20px;line-height:1;">💪</span><div><div style="font-weight:600;color:#15271D;font-size:16px;">Muscle upkeep</div><div style="font-size:14.5px;color:#52614F;">Everyday protein top-up.</div></div></div>
-          </div>
-        </div>
-        <div data-reveal style="display:grid;grid-template-rows:1fr 1fr;gap:24px;">
-          <div style="background:#E2EADD;border-radius:22px;padding:28px 30px;">
-            <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#2F6B47;margin-bottom:12px;">✓ Why you'd reach for it</div>
-            <p style="margin:0;font-size:15.5px;color:#274733;line-height:1.55;">Carb-heavy meals, a healthier snack swap, sluggish digestion, or trouble hitting protein goals.</p>
-          </div>
-          <div style="background:#F3E4DE;border-radius:22px;padding:28px 30px;">
-            <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#A6432F;margin-bottom:12px;">✕ Why you might not</div>
-            <p style="margin:0;font-size:15.5px;color:#6E2C1F;line-height:1.55;">You have a tree-nut allergy, or you're already comfortably meeting protein and fibre targets.</p>
+        <div data-reveal data-card style="background:#fff;border:3px solid #1A1033;border-radius:22px;padding:34px 32px;box-shadow:8px 8px 0 #1A1033;">
+          <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#5A9E00;margin-bottom:14px;">🧾 What's inside</div>
+          <h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:23px;color:#1A1033;margin:0 0 16px;">Clean-label, no blends</h3>
+          <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Millets (ragi, bajra)</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Protein blend</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Almonds &amp; cashews</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Psyllium &amp; oat fibre</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Dates</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">A little ghee</span>
           </div>
         </div>
       </div>
 
+      <div data-reveal style="background:#1A1033;border:3px solid #1A1033;border-radius:22px;padding:38px 36px;margin-bottom:20px;box-shadow:8px 8px 0 rgba(26,16,51,0.35);">
+        <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#C6FF3D;margin-bottom:6px;">📊 Delivered vs your RDA</div>
+        <h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:24px;color:#fff;margin:0 0 24px;">How one laddu stacks up</h3>
+        <div style="display:flex;flex-direction:column;gap:18px;">
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span style="font-weight:700;color:#fff;font-size:16px;">Protein · 12 g</span><span style="font-weight:800;color:#C6FF3D;font-size:16px;">24% RDA</span></div><div style="height:14px;border-radius:99px;background:rgba(255,255,255,0.14);overflow:hidden;border:2px solid #000;"><div data-bar style="height:100%;width:24%;border-radius:99px;background:#C6FF3D;"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span style="font-weight:700;color:#fff;font-size:16px;">Fibre · 7 g</span><span style="font-weight:800;color:#FFD23F;font-size:16px;">23% RDA</span></div><div style="height:14px;border-radius:99px;background:rgba(255,255,255,0.14);overflow:hidden;border:2px solid #000;"><div data-bar style="height:100%;width:23%;border-radius:99px;background:#FFD23F;"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span style="font-weight:700;color:#fff;font-size:16px;">Iron · 8 mg</span><span style="font-weight:800;color:#FF3D8B;font-size:16px;">44% RDA</span></div><div style="height:14px;border-radius:99px;background:rgba(255,255,255,0.14);overflow:hidden;border:2px solid #000;"><div data-bar style="height:100%;width:44%;border-radius:99px;background:#FF3D8B;"></div></div></div>
+        </div>
+      </div>
+
+      <div data-rcol style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:20px;">
+        <div data-reveal data-card style="background:#fff;border:3px solid #1A1033;border-radius:22px;padding:34px 32px;box-shadow:8px 8px 0 #1A1033;">
+          <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#5A9E00;margin-bottom:16px;">💥 What it helps with</div>
+          <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:22px;">🌾</span><div><b style="color:#1A1033;font-size:15.5px;">Digestion</b><div style="font-size:13.5px;color:#233800;">Fibre feeds a healthy gut.</div></div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:22px;">🔋</span><div><b style="color:#1A1033;font-size:15.5px;">Stable energy</b><div style="font-size:13.5px;color:#233800;">No sugar-crash spikes.</div></div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:22px;">🍽️</span><div><b style="color:#1A1033;font-size:15.5px;">Satiety</b><div style="font-size:13.5px;color:#233800;">Keeps you full for hours.</div></div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:22px;">💪</span><div><b style="color:#1A1033;font-size:15.5px;">Muscle upkeep</b><div style="font-size:13.5px;color:#233800;">Everyday protein top-up.</div></div></div>
+          </div>
+        </div>
+        <div data-reveal style="display:grid;grid-template-rows:1fr 1fr;gap:20px;">
+          <div style="background:#FFD23F;border:3px solid #1A1033;border-radius:20px;padding:24px 26px;box-shadow:6px 6px 0 #1A1033;"><div style="font-size:12px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#1A1033;margin-bottom:8px;">✓ Reach for it if</div><p style="margin:0;font-size:15px;font-weight:600;color:#1A1033;line-height:1.45;">Carb-heavy meals, a healthier snack swap, sluggish digestion, or missing protein goals.</p></div>
+          <div style="background:#FF3D8B;border:3px solid #1A1033;border-radius:20px;padding:24px 26px;box-shadow:6px 6px 0 #1A1033;"><div style="font-size:12px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#fff;margin-bottom:8px;">✕ Maybe not if</div><p style="margin:0;font-size:15px;font-weight:600;color:#fff;line-height:1.45;">You have a tree-nut allergy, or already hit your protein &amp; fibre targets.</p></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="powder" style="padding:90px 0 96px;border-top:6px solid #5B7FA6;scroll-margin-top:80px;background:linear-gradient(180deg,rgba(91,127,166,0.06),rgba(244,240,231,0) 340px);">
-    <div style="max-width:1200px;margin:0 auto;padding:0 32px;">
-
-      <div data-reveal data-rcol style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;align-items:center;margin-bottom:80px;">
-        <div data-pop style="position:relative;border-radius:26px;overflow:hidden;box-shadow:0 30px 64px rgba(20,58,43,0.16);aspect-ratio:1/1;background:#E8E2D0;display:flex;align-items:center;justify-content:center;">
-          <img src="./images/powder.jpg" alt="Vitality Wellness Powder range" style="width:100%;height:100%;object-fit:contain;padding:26px;"></img>
+  <section id="powder" style="padding:80px 0;background:#2D5BFF;scroll-margin-top:80px;position:relative;overflow:hidden;">
+    <div aria-hidden="true" data-ghost style="position:absolute;top:50px;right:-30px;width:150px;height:150px;background:#7FB0FF;border:5px solid #1A1033;border-radius:20px;animation:fbWobble 6s ease-in-out infinite;pointer-events:none;"></div>
+    <div style="max-width:1180px;margin:0 auto;padding:0 24px;position:relative;">
+      <div data-rcol style="display:grid;grid-template-columns:0.85fr 1.15fr;gap:44px;align-items:center;margin-bottom:56px;">
+        <div data-pop style="position:relative;border:4px solid #1A1033;border-radius:26px;overflow:hidden;box-shadow:12px 12px 0 #1A1033;aspect-ratio:1/1;background:#7FB0FF;display:flex;align-items:center;justify-content:center;">
+          <img src="/.images/powder.png" alt="Vitality Wellness Powder range" style="width:100%;height:100%;object-fit:contain;padding:22px;"></img>
         </div>
         <div>
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;"><span style="font-family:'Sora',sans-serif;font-weight:800;font-size:64px;line-height:0.8;letter-spacing:-0.04em;color:#5B7FA6;">03</span><span style="font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#5B7FA6;">The fatigue trifecta</span></div>
-          <h2 style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:#15271D;margin:0 0 18px;">Vitality Wellness Powder</h2>
-          <p style="font-size:19px;line-height:1.6;color:#52614F;margin:0 0 26px;max-width:520px;">A daily mix that targets iron, B12 and folate together — the three nutrients behind most everyday fatigue — in three formulas tuned for kids, adults and seniors.</p>
-          <div data-rcol style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:0;border-radius:18px;overflow:hidden;border:1px solid rgba(91,127,166,0.3);max-width:540px;margin:0 0 28px;">
-            <div style="background:#E4EAF1;padding:20px 24px;"><div style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#3C5F82;margin-bottom:4px;">You're missing</div><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:40px;line-height:1;color:#5B7FA6;"><span data-count data-to="1">1</span> in 2</div><div style="font-size:13.5px;color:#2C4763;margin-top:4px;">women are iron-deficient</div></div>
-            <div style="background:#fff;padding:0 10px;font-size:22px;color:#5B7FA6;">→</div>
-            <div style="background:#143A2B;padding:20px 24px;"><div style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6FB58C;margin-bottom:4px;">We fill it</div><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:40px;line-height:1;color:#F4F0E7;"><span data-count data-to="3">3</span> nutrients</div><div style="font-size:13.5px;color:rgba(233,223,203,0.8);margin-top:4px;">iron, B12 &amp; folate together</div></div>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:10px;">
-            <span style="font-size:14px;font-weight:600;color:#143A2B;background:#EDE6D4;border-radius:999px;padding:8px 15px;">14mg iron</span>
-            <span style="font-size:14px;font-weight:600;color:#143A2B;background:#EDE6D4;border-radius:999px;padding:8px 15px;">2.4mcg B12</span>
-            <span style="font-size:14px;font-weight:600;color:#143A2B;background:#EDE6D4;border-radius:999px;padding:8px 15px;">400mcg folate</span>
-            <span style="font-size:14px;font-weight:600;color:#143A2B;background:#EDE6D4;border-radius:999px;padding:8px 15px;">Up to 25g protein</span>
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;"><span style="font-family:'Sora',sans-serif;font-weight:800;font-size:72px;line-height:0.8;color:#fff;-webkit-text-stroke:2px #1A1033;">03</span><span style="background:#1A1033;color:#7FB0FF;font-size:12.5px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:7px 14px;border-radius:999px;transform:rotate(-2deg);">The fatigue trifecta</span></div>
+          <h2 style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(34px,5vw,58px);line-height:0.98;letter-spacing:-0.03em;color:#fff;margin:0 0 16px;">Vitality Wellness Powder</h2>
+          <p style="font-size:19px;font-weight:600;line-height:1.5;color:#E4ECFF;margin:0 0 24px;max-width:520px;">A daily mix hitting iron, B12 &amp; folate together — the trio behind most everyday fatigue — in formulas tuned for kids, adults &amp; seniors.</p>
+          <div data-rcol style="display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:0;border:3px solid #1A1033;border-radius:18px;overflow:hidden;max-width:520px;box-shadow:6px 6px 0 #1A1033;">
+            <div style="background:#fff;padding:18px 22px;"><div style="font-size:11px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#2D5BFF;margin-bottom:2px;">You're missing</div><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:38px;line-height:1;color:#1A1033;"><span data-count data-to="1">1</span><span style="font-size:0.5em;"> in 2</span></div><div style="font-size:13px;font-weight:600;color:#1B2A52;">women low on iron</div></div>
+            <div style="background:#7FB0FF;display:flex;align-items:center;padding:0 8px;font-size:22px;font-weight:800;">→</div>
+            <div style="background:#1A1033;padding:18px 22px;"><div style="font-size:11px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#C6FF3D;margin-bottom:2px;">We fill it</div><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:38px;line-height:1;color:#fff;"><span data-count data-to="3">3</span></div><div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.8);">iron, B12 &amp; folate</div></div>
           </div>
         </div>
       </div>
 
-      <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
-        <div data-reveal style="background:#fff;border:1px solid rgba(20,58,43,0.1);border-radius:22px;padding:38px 36px;">
-          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#5B7FA6;margin-bottom:16px;">The cause</div>
-          <h3 style="font-family:'Sora',sans-serif;font-weight:600;font-size:24px;color:#15271D;margin:0 0 14px;">Why iron, B12 &amp; folate fall short</h3>
-          <p style="margin:0 0 14px;font-size:16.5px;color:#52614F;">These three drive oxygen, energy and nerve health — and they're the first to dip in common eating patterns.</p>
-          <ul style="margin:0;padding-left:20px;font-size:16px;color:#52614F;line-height:1.7;">
-            <li>B12 is found almost only in animal foods — vegetarians run low.</li>
-            <li>Monthly menstrual loss steadily depletes iron in women.</li>
-            <li>Plant iron absorbs poorly without the right cofactors.</li>
-            <li>Low folate compounds the fatigue and affects red-blood-cell formation.</li>
+      <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+        <div data-reveal data-card style="background:#fff;border:3px solid #1A1033;border-radius:22px;padding:34px 32px;box-shadow:8px 8px 0 #1A1033;">
+          <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#2D5BFF;margin-bottom:14px;">⚡ The cause</div>
+          <h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:23px;color:#1A1033;margin:0 0 12px;">Why iron, B12 &amp; folate dip</h3>
+          <ul style="margin:0;padding-left:20px;font-size:16px;font-weight:500;color:#1B2A52;line-height:1.7;">
+            <li>B12 sits almost only in animal foods.</li>
+            <li>Monthly loss steadily depletes women's iron.</li>
+            <li>Plant iron absorbs poorly without cofactors.</li>
+            <li>Low folate compounds the fatigue.</li>
           </ul>
         </div>
-        <div data-reveal style="background:#fff;border:1px solid rgba(20,58,43,0.1);border-radius:22px;padding:38px 36px;">
-          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#5B7FA6;margin-bottom:16px;">What's inside</div>
-          <h3 style="font-family:'Sora',sans-serif;font-weight:600;font-size:24px;color:#15271D;margin:0 0 18px;">Clean-label ingredients</h3>
-          <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#3E8E5E;flex-shrink:0;"></span>Protein blend</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#B5503C;flex-shrink:0;"></span>Iron (bisglycinate)</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#5B7FA6;flex-shrink:0;"></span>B12 (methylcobalamin)</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#9A8748;flex-shrink:0;"></span>Folate (5-MTHF)</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#E0A93B;flex-shrink:0;"></span>Vitamin D3</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:15.5px;color:#3C4A3D;"><span style="width:8px;height:8px;border-radius:50%;background:#6FA382;flex-shrink:0;"></span>Probiotics</div>
-          </div>
-          <p style="margin:20px 0 0;font-size:14px;color:#8A9384;">Well-absorbed nutrient forms · no artificial colours · no proprietary blends.</p>
-        </div>
-      </div>
-
-      <div data-reveal style="background:#0E2A1F;color:#E9DFCB;border-radius:24px;padding:44px 44px 40px;margin-bottom:24px;">
-        <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6FB58C;margin-bottom:8px;">Delivered vs your RDA</div>
-        <h3 style="font-family:'Sora',sans-serif;font-weight:600;font-size:26px;color:#F4F0E7;margin:0 0 28px;">How one serving measures up</h3>
-        <div style="display:flex;flex-direction:column;gap:22px;">
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;"><span style="font-weight:600;color:#F4F0E7;font-size:16.5px;">Vitamin B12 · 2.4 mcg</span><span style="font-weight:700;color:#6FB58C;font-size:16.5px;">100% RDA</span></div>
-            <div style="height:12px;border-radius:99px;background:rgba(233,223,203,0.14);overflow:hidden;"><div data-bar data-pct="100" style="height:100%;width:100%;border-radius:99px;background:#6FB58C;"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;"><span style="font-weight:600;color:#F4F0E7;font-size:16.5px;">Folate · 400 mcg</span><span style="font-weight:700;color:#6FB58C;font-size:16.5px;">100% RDA</span></div>
-            <div style="height:12px;border-radius:99px;background:rgba(233,223,203,0.14);overflow:hidden;"><div data-bar data-pct="100" style="height:100%;width:100%;border-radius:99px;background:#9A8748;"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;"><span style="font-weight:600;color:#F4F0E7;font-size:16.5px;">Iron · 14 mg</span><span style="font-weight:700;color:#E9DFCB;font-size:16.5px;">78% RDA</span></div>
-            <div style="height:12px;border-radius:99px;background:rgba(233,223,203,0.14);overflow:hidden;"><div data-bar data-pct="78" style="height:100%;width:78%;border-radius:99px;background:#B5503C;"></div></div>
-          </div>
-        </div>
-        <p style="margin:24px 0 0;font-size:13.5px;color:rgba(233,223,203,0.5);">RDA reference for adults. Protein and dose vary by formula (Kids · Adults · Seniors).</p>
-      </div>
-
-      <div data-rcol style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:24px;">
-        <div data-reveal style="background:#fff;border:1px solid rgba(20,58,43,0.1);border-radius:22px;padding:38px 36px;">
-          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#5B7FA6;margin-bottom:18px;">What it helps with</div>
-          <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="font-size:20px;line-height:1;">⚡</span><div><div style="font-weight:600;color:#15271D;font-size:16px;">Energy</div><div style="font-size:14.5px;color:#52614F;">Fights the afternoon crash.</div></div></div>
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="font-size:20px;line-height:1;">🩸</span><div><div style="font-weight:600;color:#15271D;font-size:16px;">Haemoglobin</div><div style="font-size:14.5px;color:#52614F;">Rebuilds oxygen-carrying blood.</div></div></div>
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="font-size:20px;line-height:1;">🧠</span><div><div style="font-weight:600;color:#15271D;font-size:16px;">Focus</div><div style="font-size:14.5px;color:#52614F;">Clears the brain fog.</div></div></div>
-            <div style="display:flex;gap:12px;align-items:flex-start;"><span style="font-size:20px;line-height:1;">💇</span><div><div style="font-weight:600;color:#15271D;font-size:16px;">Hair &amp; skin</div><div style="font-size:14.5px;color:#52614F;">Less fall, healthier glow.</div></div></div>
-          </div>
-        </div>
-        <div data-reveal style="display:grid;grid-template-rows:1fr 1fr;gap:24px;">
-          <div style="background:#E2EADD;border-radius:22px;padding:28px 30px;">
-            <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#2F6B47;margin-bottom:12px;">✓ Why you'd reach for it</div>
-            <p style="margin:0;font-size:15.5px;color:#274733;line-height:1.55;">Persistent fatigue, brain fog, hair fall, a vegetarian diet, or anaemia risk in menstruating women.</p>
-          </div>
-          <div style="background:#F3E4DE;border-radius:22px;padding:28px 30px;">
-            <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#A6432F;margin-bottom:12px;">✕ Why you might not</div>
-            <p style="margin:0;font-size:15.5px;color:#6E2C1F;line-height:1.55;">You have an iron-overload condition (e.g. haemochromatosis) — added iron needs a doctor's guidance.</p>
+        <div data-reveal data-card style="background:#fff;border:3px solid #1A1033;border-radius:22px;padding:34px 32px;box-shadow:8px 8px 0 #1A1033;">
+          <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#2D5BFF;margin-bottom:14px;">🧾 What's inside</div>
+          <h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:23px;color:#1A1033;margin:0 0 16px;">Well-absorbed forms</h3>
+          <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Protein blend</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Iron bisglycinate</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">B12 (methyl)</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Folate (5-MTHF)</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Vitamin D3</span>
+            <span style="background:#FFF3DD;border:2px solid #1A1033;border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;">Probiotics</span>
           </div>
         </div>
       </div>
 
-    </div>
-  </section>
-
-  <section id="life" style="padding:110px 0;background:#0E2A1F;color:#E9DFCB;position:relative;overflow:hidden;scroll-margin-top:80px;">
-    <div style="position:absolute;top:-120px;right:-80px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle, rgba(110,181,140,0.14), rgba(14,42,31,0) 68%);pointer-events:none;"></div>
-    <div style="max-width:1200px;margin:0 auto;padding:0 32px;position:relative;">
-      <div data-reveal style="max-width:760px;margin-bottom:52px;">
-        <span style="display:inline-block;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6FB58C;margin-bottom:16px;">Across every life stage</span>
-        <h2 style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(32px,4.8vw,56px);line-height:1.04;letter-spacing:-0.03em;color:#F4F0E7;margin:0 0 16px;">The same nutrient,<br>a different job at every age.</h2>
-        <p style="font-size:clamp(17px,1.9vw,20px);color:rgba(233,223,203,0.75);margin:0;max-width:600px;">Why one gap deserves attention from a five-year-old to a seventy-year-old — read each product across childhood, adulthood and seniority.</p>
+      <div data-reveal style="background:#1A1033;border:3px solid #1A1033;border-radius:22px;padding:38px 36px;margin-bottom:20px;box-shadow:8px 8px 0 rgba(26,16,51,0.35);">
+        <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#C6FF3D;margin-bottom:6px;">📊 Delivered vs your RDA</div>
+        <h3 style="font-family:'Sora',sans-serif;font-weight:800;font-size:24px;color:#fff;margin:0 0 24px;">How one serving stacks up</h3>
+        <div style="display:flex;flex-direction:column;gap:18px;">
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span style="font-weight:700;color:#fff;font-size:16px;">Vitamin B12 · 2.4 mcg</span><span style="font-weight:800;color:#C6FF3D;font-size:16px;">100% RDA</span></div><div style="height:14px;border-radius:99px;background:rgba(255,255,255,0.14);overflow:hidden;border:2px solid #000;"><div data-bar style="height:100%;width:100%;border-radius:99px;background:#C6FF3D;"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span style="font-weight:700;color:#fff;font-size:16px;">Folate · 400 mcg</span><span style="font-weight:800;color:#FFD23F;font-size:16px;">100% RDA</span></div><div style="height:14px;border-radius:99px;background:rgba(255,255,255,0.14);overflow:hidden;border:2px solid #000;"><div data-bar style="height:100%;width:100%;border-radius:99px;background:#FFD23F;"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span style="font-weight:700;color:#fff;font-size:16px;">Iron · 14 mg</span><span style="font-weight:800;color:#FF3D8B;font-size:16px;">78% RDA</span></div><div style="height:14px;border-radius:99px;background:rgba(255,255,255,0.14);overflow:hidden;border:2px solid #000;"><div data-bar style="height:100%;width:78%;border-radius:99px;background:#FF3D8B;"></div></div></div>
+        </div>
       </div>
 
-      <div data-life-grid data-rcol style="display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr;gap:1px;background:rgba(233,223,203,0.14);border:1px solid rgba(233,223,203,0.14);border-radius:22px;overflow:hidden;">
-        <div style="background:#0E2A1F;padding:26px 26px;"></div>
-        <div style="background:#12332440;padding:24px 26px;display:flex;align-items:center;gap:13px;"><span style="width:46px;height:46px;border-radius:50%;background:#E0A93B;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">🧒</span><span style="font-family:'Sora',sans-serif;font-weight:700;font-size:19px;color:#F4F0E7;">Childhood</span></div>
-        <div style="background:#12332440;padding:24px 26px;display:flex;align-items:center;gap:13px;"><span style="width:46px;height:46px;border-radius:50%;background:#6FB58C;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">🧑</span><span style="font-family:'Sora',sans-serif;font-weight:700;font-size:19px;color:#F4F0E7;">Adulthood</span></div>
-        <div style="background:#12332440;padding:24px 26px;display:flex;align-items:center;gap:13px;"><span style="width:46px;height:46px;border-radius:50%;background:#7FA6CC;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">🧓</span><span style="font-family:'Sora',sans-serif;font-weight:700;font-size:19px;color:#F4F0E7;">Seniors</span></div>
-
-        <div style="background:#0E2A1F;padding:28px 26px;"><div style="font-weight:700;color:#F4F0E7;font-size:18px;font-family:'Sora',sans-serif;">Vitamin D</div><div style="font-size:13.5px;color:#E0A93B;font-weight:600;margin-top:4px;">Dark Chocolate Truffle</div></div>
-        <div style="background:#0E2A1F;padding:28px 26px;font-size:15.5px;color:rgba(233,223,203,0.82);line-height:1.55;">Builds growing bones and wards off rickets; supports a developing immune system.</div>
-        <div style="background:#0E2A1F;padding:28px 26px;font-size:15.5px;color:rgba(233,223,203,0.82);line-height:1.55;">Maintains bone density, steadies mood, and speeds muscle recovery after training.</div>
-        <div style="background:#0E2A1F;padding:28px 26px;font-size:15.5px;color:rgba(233,223,203,0.82);line-height:1.55;">Protects against osteoporosis and lowers fall &amp; fracture risk by keeping muscle strong.</div>
-
-        <div style="background:#0E2A1F;padding:28px 26px;"><div style="font-weight:700;color:#F4F0E7;font-size:18px;font-family:'Sora',sans-serif;">Protein &amp; Fibre</div><div style="font-size:13.5px;color:#6FB58C;font-weight:600;margin-top:4px;">Fibre-Rich Laddu</div></div>
-        <div style="background:#0E2A1F;padding:28px 26px;font-size:15.5px;color:rgba(233,223,203,0.82);line-height:1.55;">Fuels growth and development; builds healthy digestion and eating habits early.</div>
-        <div style="background:#0E2A1F;padding:28px 26px;font-size:15.5px;color:rgba(233,223,203,0.82);line-height:1.55;">Maintains muscle, keeps you full, and supports steady metabolic health.</div>
-        <div style="background:#0E2A1F;padding:28px 26px;font-size:15.5px;color:rgba(233,223,203,0.82);line-height:1.55;">Guards against sarcopenia (age-related muscle loss) and keeps digestion regular.</div>
-
-        <div style="background:#0E2A1F;padding:28px 26px;"><div style="font-weight:700;color:#F4F0E7;font-size:18px;font-family:'Sora',sans-serif;">Iron · B12 · Folate</div><div style="font-size:13.5px;color:#7FA6CC;font-weight:600;margin-top:4px;">Vitality Powder</div></div>
-        <div style="background:#0E2A1F;padding:28px 26px;font-size:15.5px;color:rgba(233,223,203,0.82);line-height:1.55;">Drives cognitive development and focus — crucial for learning and school years.</div>
-        <div style="background:#0E2A1F;padding:28px 26px;font-size:15.5px;color:rgba(233,223,203,0.82);line-height:1.55;">Sustains energy and fertility; especially vital for menstruating women's iron.</div>
-        <div style="background:#0E2A1F;padding:28px 26px;font-size:15.5px;color:rgba(233,223,203,0.82);line-height:1.55;">Preserves cognition and nerve health; prevents anaemia-driven fatigue and frailty.</div>
+      <div data-rcol style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:20px;">
+        <div data-reveal data-card style="background:#fff;border:3px solid #1A1033;border-radius:22px;padding:34px 32px;box-shadow:8px 8px 0 #1A1033;">
+          <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#2D5BFF;margin-bottom:16px;">💥 What it helps with</div>
+          <div data-rcol style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:22px;">⚡</span><div><b style="color:#1A1033;font-size:15.5px;">Energy</b><div style="font-size:13.5px;color:#1B2A52;">Fights the afternoon crash.</div></div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:22px;">🩸</span><div><b style="color:#1A1033;font-size:15.5px;">Haemoglobin</b><div style="font-size:13.5px;color:#1B2A52;">Rebuilds oxygen-rich blood.</div></div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:22px;">🧠</span><div><b style="color:#1A1033;font-size:15.5px;">Focus</b><div style="font-size:13.5px;color:#1B2A52;">Clears the brain fog.</div></div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:22px;">💇</span><div><b style="color:#1A1033;font-size:15.5px;">Hair &amp; skin</b><div style="font-size:13.5px;color:#1B2A52;">Less fall, healthier glow.</div></div></div>
+          </div>
+        </div>
+        <div data-reveal style="display:grid;grid-template-rows:1fr 1fr;gap:20px;">
+          <div style="background:#C6FF3D;border:3px solid #1A1033;border-radius:20px;padding:24px 26px;box-shadow:6px 6px 0 #1A1033;"><div style="font-size:12px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#1A1033;margin-bottom:8px;">✓ Reach for it if</div><p style="margin:0;font-size:15px;font-weight:600;color:#1A1033;line-height:1.45;">Constant fatigue, brain fog, hair fall, a veg diet, or anaemia risk.</p></div>
+          <div style="background:#FF3D8B;border:3px solid #1A1033;border-radius:20px;padding:24px 26px;box-shadow:6px 6px 0 #1A1033;"><div style="font-size:12px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#fff;margin-bottom:8px;">✕ Maybe not if</div><p style="margin:0;font-size:15px;font-weight:600;color:#fff;line-height:1.45;">You have iron overload (haemochromatosis) — added iron needs a doctor.</p></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <footer style="background:#0A2017;color:rgba(233,223,203,0.7);padding:64px 0 40px;">
-    <div style="max-width:1200px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;">
-      <div style="max-width:320px;">
-        <div style="display:flex;align-items:center;gap:11px;margin-bottom:16px;">
-          <span style="width:32px;height:32px;border-radius:9px;background:#E9DFCB;display:flex;align-items:center;justify-content:center;"><span style="width:10px;height:10px;border-radius:50%;background:#0A2017;"></span></span>
-          <span style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;letter-spacing:-0.02em;color:#F4F0E7;">FitBite</span>
-        </div>
-        <p style="margin:0;font-size:15px;line-height:1.6;">A field guide to food-first nutrition. Explore what's really in every bite — cause, ingredients, dose and why it matters at every age.</p>
+  <section id="life" style="padding:84px 0;background:#1A1033;color:#fff;scroll-margin-top:80px;position:relative;overflow:hidden;">
+    <div aria-hidden="true" data-ghost style="position:absolute;top:60px;left:6%;width:70px;height:70px;border:4px solid #FF3D8B;border-radius:50%;animation:fbSpin 20s linear infinite;pointer-events:none;"></div>
+    <div style="max-width:1180px;margin:0 auto;padding:0 24px;position:relative;">
+      <div data-reveal style="max-width:760px;margin-bottom:44px;">
+        <span style="display:inline-block;background:#FFD23F;color:#1A1033;font-size:12.5px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:7px 16px;border-radius:999px;border:2.5px solid #1A1033;margin-bottom:20px;transform:rotate(-1.5deg);">Across every life stage</span>
+        <h2 style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(32px,5vw,58px);line-height:0.98;letter-spacing:-0.03em;color:#fff;margin:0 0 12px;">Same nutrient.<br>Different dose at every age.</h2>
+        <p style="margin:0;font-size:16px;font-weight:600;color:#C9BFF0;">How much you actually need — in real numbers — from a 5-year-old to a 70-year-old.</p>
       </div>
-      <div style="display:flex;gap:64px;flex-wrap:wrap;">
-        <div>
-          <div style="font-size:12.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6FB58C;margin-bottom:14px;">Explore</div>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <a href="#truffle" data-scroll style="text-decoration:none;color:rgba(233,223,203,0.7);font-size:15px;">Dark Chocolate Truffle</a>
-            <a href="#laddu" data-scroll style="text-decoration:none;color:rgba(233,223,203,0.7);font-size:15px;">Fibre-Rich Protein Laddu</a>
-            <a href="#powder" data-scroll style="text-decoration:none;color:rgba(233,223,203,0.7);font-size:15px;">Vitality Wellness Powder</a>
-          </div>
+
+      <div data-rcol style="display:grid;grid-template-columns:0.9fr 1fr 1fr 1fr;gap:14px;">
+        <div aria-hidden="true" data-ghost style="visibility:hidden;"></div>
+        <div style="background:#FFD23F;border:3px solid #1A1033;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:11px;box-shadow:5px 5px 0 #000;"><span style="width:40px;height:40px;border-radius:50%;background:#fff;border:2.5px solid #1A1033;display:flex;align-items:center;justify-content:center;font-size:21px;">🧒</span><span style="font-family:'Sora',sans-serif;font-weight:800;font-size:17px;color:#1A1033;">Childhood</span></div>
+        <div style="background:#C6FF3D;border:3px solid #1A1033;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:11px;box-shadow:5px 5px 0 #000;"><span style="width:40px;height:40px;border-radius:50%;background:#fff;border:2.5px solid #1A1033;display:flex;align-items:center;justify-content:center;font-size:21px;">🧑</span><span style="font-family:'Sora',sans-serif;font-weight:800;font-size:17px;color:#1A1033;">Adulthood</span></div>
+        <div style="background:#7FB0FF;border:3px solid #1A1033;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:11px;box-shadow:5px 5px 0 #000;"><span style="width:40px;height:40px;border-radius:50%;background:#fff;border:2.5px solid #1A1033;display:flex;align-items:center;justify-content:center;font-size:21px;">🧓</span><span style="font-family:'Sora',sans-serif;font-weight:800;font-size:17px;color:#1A1033;">Seniors</span></div>
+
+        <div style="background:#FF6A2C;border:3px solid #1A1033;border-radius:16px;padding:20px;box-shadow:5px 5px 0 #000;"><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:18px;color:#1A1033;">Vitamin D</div><div style="font-size:12.5px;font-weight:700;color:#1A1033;margin-top:2px;">🍫 Truffle</div></div>
+        <div style="background:#241847;border:3px solid #1A1033;border-radius:16px;padding:20px;"><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:34px;line-height:1;color:#FFB27A;">600 IU</div><div style="font-size:13.5px;font-weight:600;color:#E6E1F5;margin-top:6px;">a day — for growing bones &amp; no rickets</div></div>
+        <div style="background:#241847;border:3px solid #1A1033;border-radius:16px;padding:20px;"><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:34px;line-height:1;color:#FFB27A;">600 IU</div><div style="font-size:13.5px;font-weight:600;color:#E6E1F5;margin-top:6px;">a day — steadier mood &amp; faster recovery</div></div>
+        <div style="background:#241847;border:3px solid #1A1033;border-radius:16px;padding:20px;"><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:34px;line-height:1;color:#FFB27A;">800 IU</div><div style="font-size:13.5px;font-weight:600;color:#E6E1F5;margin-top:6px;">a day — up to 30% fewer falls</div></div>
+
+        <div style="background:#14CFA6;border:3px solid #1A1033;border-radius:16px;padding:20px;box-shadow:5px 5px 0 #000;"><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:18px;color:#1A1033;">Protein &amp; Fibre</div><div style="font-size:12.5px;font-weight:700;color:#1A1033;margin-top:2px;">🌾 Laddu</div></div>
+        <div style="background:#241847;border:3px solid #1A1033;border-radius:16px;padding:20px;"><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:34px;line-height:1;color:#8CF0C8;">~20g</div><div style="font-size:13.5px;font-weight:600;color:#E6E1F5;margin-top:6px;">protein a day — fuel to grow</div></div>
+        <div style="background:#241847;border:3px solid #1A1033;border-radius:16px;padding:20px;"><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:34px;line-height:1;color:#8CF0C8;">0.8<span style="font-size:18px;">g/kg</span></div><div style="font-size:13.5px;font-weight:600;color:#E6E1F5;margin-top:6px;">daily — hold muscle, stay full</div></div>
+        <div style="background:#241847;border:3px solid #1A1033;border-radius:16px;padding:20px;"><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:34px;line-height:1;color:#8CF0C8;">1.2<span style="font-size:18px;">g/kg</span></div><div style="font-size:13.5px;font-weight:600;color:#E6E1F5;margin-top:6px;">50% more — to beat muscle loss</div></div>
+
+        <div style="background:#2D5BFF;border:3px solid #1A1033;border-radius:16px;padding:20px;box-shadow:5px 5px 0 #000;"><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:18px;color:#fff;">Iron · B12 · Folate</div><div style="font-size:12.5px;font-weight:700;color:#C6FF3D;margin-top:2px;">🩸 Powder</div></div>
+        <div style="background:#241847;border:3px solid #1A1033;border-radius:16px;padding:20px;"><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:34px;line-height:1;color:#9FC0FF;">10<span style="font-size:18px;">mg</span></div><div style="font-size:13.5px;font-weight:600;color:#E6E1F5;margin-top:6px;">iron a day — focus at school</div></div>
+        <div style="background:#241847;border:3px solid #1A1033;border-radius:16px;padding:20px;"><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:34px;line-height:1;color:#9FC0FF;">18<span style="font-size:18px;">mg</span></div><div style="font-size:13.5px;font-weight:600;color:#E6E1F5;margin-top:6px;">iron a day for women — 2× men's</div></div>
+        <div style="background:#241847;border:3px solid #1A1033;border-radius:16px;padding:20px;"><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:34px;line-height:1;color:#9FC0FF;">30<span style="font-size:18px;">%</span></div><div style="font-size:13.5px;font-weight:600;color:#E6E1F5;margin-top:6px;">of over-50s can't absorb B12 well</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#FF3D8B;color:#1A1033;padding:60px 0 34px;border-top:3px solid #1A1033;">
+    <div data-rcol style="max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px;">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="width:32px;height:32px;border-radius:50%;background:#FFD23F;border:2.5px solid #1A1033;display:flex;align-items:center;justify-content:center;font-size:17px;">🍫</span><span style="font-family:'Sora',sans-serif;font-weight:800;font-size:21px;color:#1A1033;">FitBite</span></div>
+        <p style="margin:0;font-size:15px;font-weight:600;line-height:1.55;max-width:320px;">A loud field guide to food-first nutrition. What you're missing, and the three foods that fill it back in.</p>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;">Explore</div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <a href="#truffle" data-scroll style="text-decoration:none;color:#1A1033;font-size:15px;font-weight:700;">🍫 Truffle</a>
+          <a href="#laddu" data-scroll style="text-decoration:none;color:#1A1033;font-size:15px;font-weight:700;">🌾 Laddu</a>
+          <a href="#powder" data-scroll style="text-decoration:none;color:#1A1033;font-size:15px;font-weight:700;">🩸 Powder</a>
         </div>
-        <div>
-          <div style="font-size:12.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6FB58C;margin-bottom:14px;">Learn</div>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <a href="#life" data-scroll style="text-decoration:none;color:rgba(233,223,203,0.7);font-size:15px;">Across life stages</a>
-            <a href="#top" data-scroll style="text-decoration:none;color:rgba(233,223,203,0.7);font-size:15px;">Back to top</a>
-          </div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;">Learn</div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <a href="#life" data-scroll style="text-decoration:none;color:#1A1033;font-size:15px;font-weight:700;">Across life stages</a>
+          <a href="#top" data-scroll style="text-decoration:none;color:#1A1033;font-size:15px;font-weight:700;">Back to top ↑</a>
         </div>
       </div>
     </div>
-    <div style="max-width:1200px;margin:48px auto 0;padding:24px 32px 0;border-top:1px solid rgba(233,223,203,0.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13.5px;color:rgba(233,223,203,0.45);">
-      <span>© 2026 FitBite Nutrition. An educational field guide — not medical advice.</span>
-      <span>FSSAI certified · Third-party lab verified</span>
+    <div style="max-width:1180px;margin:36px auto 0;padding:20px 24px 0;border-top:2.5px solid #1A1033;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px;font-weight:600;">
+      <span>© 2026 FitBite — an educational field guide, not medical advice.</span>
+      <span>FSSAI certified · Lab verified</span>
     </div>
   </footer>
 
@@ -516,38 +417,30 @@ class Component extends DCLogic {
     const to = parseFloat(el.getAttribute('data-to')||'0');
     const dec = parseInt(el.getAttribute('data-decimals')||'0');
     const suffix = el.getAttribute('data-suffix')||'';
-    const prefix = el.getAttribute('data-prefix')||'';
-    const dur = 1400, start = performance.now();
+    const dur = 1300, start = performance.now();
     const tick = (now)=>{
       const p = Math.min(1,(now-start)/dur);
       const e = 1-Math.pow(1-p,3);
-      el.textContent = prefix + (to*e).toFixed(dec) + suffix;
-      if(p<1) requestAnimationFrame(tick);
-      else el.textContent = prefix + to.toFixed(dec) + suffix;
+      el.textContent = (to*e).toFixed(dec) + suffix;
+      if(p<1) requestAnimationFrame(tick); else el.textContent = to.toFixed(dec) + suffix;
     };
     requestAnimationFrame(tick);
   }
   componentDidMount(){
     const root = document.querySelector('#top');
     if(!root) return;
-
-    // Count-up stats. Final value is in the DOM by default (visible if JS is off);
-    // here we animate 0 -> target on mount so it can never stick at 0.
-    root.querySelectorAll('[data-count]').forEach((el, i)=>{
-      setTimeout(()=>this.animateCount(el), 120 + i*90);
-    });
-
-    // Progressive enhancement: content is visible by default (CSS handles the
-    // reveal/pop/bar animations), so nothing depends on this running.
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ this.animateCount(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.4 });
+    root.querySelectorAll('[data-count]').forEach(el=>io.observe(el));
     root.querySelectorAll('a[data-scroll]').forEach(a=>{
       a.addEventListener('click',(ev)=>{
         const id=a.getAttribute('href');
-        if(id && id.startsWith('#')){ const t=id==='#top'?root:root.querySelector(id); if(t){ ev.preventDefault(); const y=id==='#top'?0:(t.getBoundingClientRect().top+window.scrollY-72); window.scrollTo({top:y,behavior:'smooth'}); } }
+        if(id && id.startsWith('#')){ const t=id==='#top'?root:root.querySelector(id); if(t){ ev.preventDefault(); const y=id==='#top'?0:(t.getBoundingClientRect().top+window.scrollY-76); window.scrollTo({top:y,behavior:'smooth'}); } }
       });
     });
-
     const nav = root.querySelector('[data-nav]');
-    if(nav){ const onScroll=()=>{ if(window.scrollY>40){ nav.style.background='rgba(244,240,231,0.82)'; nav.style.backdropFilter='saturate(180%) blur(16px)'; nav.style.webkitBackdropFilter='saturate(180%) blur(16px)'; nav.style.borderBottomColor='rgba(20,58,43,0.1)'; } else { nav.style.background='rgba(244,240,231,0)'; nav.style.backdropFilter='none'; nav.style.webkitBackdropFilter='none'; nav.style.borderBottomColor='rgba(20,58,43,0)'; } }; window.addEventListener('scroll',onScroll,{passive:true}); onScroll(); }
+    if(nav){ const bar=nav.firstElementChild; const onScroll=()=>{ if(window.scrollY>30){ bar.style.background='rgba(255,243,221,0.9)'; bar.style.backdropFilter='blur(10px)'; bar.style.borderRadius='18px'; bar.style.margin='8px auto'; bar.style.border='2.5px solid #1A1033'; bar.style.maxWidth='1180px'; } else { bar.style.background='transparent'; bar.style.backdropFilter='none'; bar.style.border='none'; } }; window.addEventListener('scroll',onScroll,{passive:true}); onScroll(); }
   }
 }
 </script>
